@@ -2,7 +2,7 @@
 
 ## 🎯 Purpose
 
-KartVis is a simple, focused web app for visualizing and exploring geospatial point data (e.g., the provided GeoJSON `prv_punkt.geojson`). The goal of this plan is to outline features, architecture, data handling, and an implementation roadmap so you can move from idea to a working app in small, testable steps.
+KartVis is a simple, focused web app for visualizing and exploring geospatial point data (e.g., the provided GeoJSON `prv_punkt.geojson`). The goal of this plan is to outline features, architecture, data notes, and next steps for a small, fast MVP implementation.
 
 ---
 
@@ -18,12 +18,10 @@ KartVis is a simple, focused web app for visualizing and exploring geospatial po
 ## 🧩 Tech stack
 
 - Next.js (app router) — project scaffold is already in place
-- JavScript
+- JavaScript
 - React + Tailwind CSS — visual styling
-- Map library suggestions:
-  - Leaflet (lightweight; many plugins) or
-  - MapLibre GL JS (WebGL-based; vector tiles & higher performance)
-- GeoJSON source: `src/data/prv_punkt.geojson`, `src/data/utl_punkt.geojson`, `src/data/utl_ledning.geojson`
+- Map library: **Leaflet** (lightweight; many plugins; chosen for this project)
+- GeoJSON source: `src/data/prv_punkt.geojson`, `src/data/ult_punkt.geojson`, `src/data/utl_ledning.geojson`
 
 ---
 
@@ -35,8 +33,40 @@ KartVis is a simple, focused web app for visualizing and exploring geospatial po
   - Normalize property names if needed.
   - Compute derived fields (e.g., group, date ranges) on the client/server.
 
+### Data file descriptions (summary)
+
+1) src/data/prv_punkt.geojson
+- Short name: prv_punkt
+- CRS: CRS84 (lon/lat)
+- Geometry: Point
+- Feature count: 15
+- Key properties: fid, PSID, REF, REFNO, STATION, FCODE, TYPE, DATEREG, DATECHANGE, MPNT_GUID, utm_x, utm_y
+- Intended use: small sample / preview point layer — display as markers; use PSID or MPNT_GUID as stable unique id
+- Default UI fields suggested: REF (or REFNO), PSID, DATEREG, DATECHANGE, TYPE/FCODE
+- Notes: small dataset, some REF/STATION values are null — UI should handle missing values gracefully; utm_x/utm_y are available as attributes if projected coords are required later
+
+2) src/data/ult_punkt.geojson
+- Short name: ult_punkt
+- CRS: CRS84 (lon/lat) — re-exported to CRS84 and confirmed
+- Geometry: Point
+- Feature count: moderate (tens → low hundreds in current file)
+- Key properties: fid, PSID, REF, STATION, FCODE (e.g., "OVL"), FUNC, YEAR, Z (elevation), LOCATION, DATEREG, DATECHANGE, etc.
+- Intended use: main/stable control or benchmark points — display markers with richer metadata available in side panel/popups
+- Default UI fields suggested: REF, PSID, STATION, YEAR, Z, DATEREG
+- Notes: now CRS-aligned with the other layers so no client-side reprojection is required; some numeric fields (YEAR, Z) may be 0 or null and should be displayed carefully
+
+3) src/data/utl_ledning.geojson
+- Short name: utl_ledning
+- CRS: CRS84 (lon/lat)
+- Geometry: LineString / MultiLineString
+- Feature count: large (hundreds of line segments in the file)
+- Key properties: fid, LSID, FCODE, FCODEGROUP, LENGTH, DATEREG, DATECHANGE, MATERIAL, DIM, YEAR, etc.
+- Intended use: utility network layer — draw as polylines for context and attribute-driven analysis
+- Default UI fields suggested: LSID, FCODE/FCODEGROUP, LENGTH, MATERIAL, DIM, DATEREG
+- Notes: larger dataset — consider performance optimizations (layer toggle, simplification, lazy-loading) if rendering many segments at once
 
 ---
+
 ## 🛠 App architecture
 
 - `app/layout.js` — site-wide layout and global styling, header.
@@ -45,7 +75,7 @@ KartVis is a simple, focused web app for visualizing and exploring geospatial po
   - `Header.jsx` — header bar with app name, settings icon, etc.
   - `Map.jsx` — map wrapper that loads GeoJSON features
   - `SidePanel.jsx` — details and filters
-- `src/data/prv_punkt.geojson` — sample dataset
+- `src/data/prv_punkt.geojson`, `src/data/ult_punkt.geojson`, `src/data/utl_ledning.geojson` — datasets
 
 ---
 
@@ -55,10 +85,10 @@ KartVis is a simple, focused web app for visualizing and exploring geospatial po
 - Left or right collapsible `SidePanel` for details & filters.
 - Main map area fills the viewport: `Map.jsx` loads `prv_punkt.geojson` and renders points.
 - Feature popup or `SidePanel` details show feature properties (e.g., `REF`, `PSID`, `DATEREG`).
-- Tabbed sidebar for different geoJSON layers listing features
-- Clicking on feature in sidebar pans and zooms to feature
-- Features filterable and searchable
-- Tooltip shown when feature clicked on in map - should be well formatted and easy to read
+- Tabbed sidebar for different GeoJSON layers listing features.
+- Clicking on a feature in the sidebar pans and zooms to the feature on the map.
+- Features filterable and searchable (search box in the sidebar or header).
+- Tooltip shown when a feature is clicked on the map — should be well formatted and easy to read.
 
 ---
 
@@ -68,8 +98,6 @@ KartVis is a simple, focused web app for visualizing and exploring geospatial po
 - On-click popup or panel for point properties.
 - Search/filter by attribute (e.g., `REFNO`, `PSID`).
 - Basic Tailwind-based styling and responsive layout.
-- 
-
 
 ---
 
@@ -114,16 +142,15 @@ npm run build
 
 ## ❓ Questions for you
 
-- Which map library do you prefer (Leaflet or MapLibre)?
-- Do you plan to host large datasets or just this small GeoJSON?
+- Do you plan to host large datasets or just these local GeoJSONs?
 - Any extra attributes or UI elements you want in v1 (search, date picker)?
 
 ---
 
 ## Next steps
 
-- Pick a map library and I’ll scaffold `src/components/Map.jsx` and wire up `prv_punkt.geojson`.
-- Or, if you prefer, the next step is a written task-by-task breakdown I can convert to `issue` cards in GitHub.
+- Scaffold `src/components/Map.jsx` using Leaflet and wire up `prv_punkt.geojson`.
+- Implement tabbed sidebar, search/filter, pan/zoom on sidebar click, and formatted tooltips.
 
 ---
 
