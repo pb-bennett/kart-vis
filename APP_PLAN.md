@@ -18,11 +18,12 @@ KartVis is a simple, focused web app for visualizing and exploring geospatial po
 ## 🧩 Tech stack
 
 - Next.js (app router) — project scaffold is already in place
+- JavScript
 - React + Tailwind CSS — visual styling
 - Map library suggestions:
   - Leaflet (lightweight; many plugins) or
   - MapLibre GL JS (WebGL-based; vector tiles & higher performance)
-- GeoJSON source: `src/data/prv_punkt.geojson`
+- GeoJSON source: `src/data/prv_punkt.geojson`, `src/data/utl_punkt.geojson`, `src/data/utl_ledning.geojson`
 
 ---
 
@@ -34,8 +35,8 @@ KartVis is a simple, focused web app for visualizing and exploring geospatial po
   - Normalize property names if needed.
   - Compute derived fields (e.g., group, date ranges) on the client/server.
 
----
 
+---
 ## 🛠 App architecture
 
 - `app/layout.js` — site-wide layout and global styling, header.
