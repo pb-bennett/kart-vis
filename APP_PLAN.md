@@ -55,6 +55,10 @@ KartVis is a simple, focused web app for visualizing and exploring geospatial po
 - Left or right collapsible `SidePanel` for details & filters.
 - Main map area fills the viewport: `Map.jsx` loads `prv_punkt.geojson` and renders points.
 - Feature popup or `SidePanel` details show feature properties (e.g., `REF`, `PSID`, `DATEREG`).
+- Tabbed sidebar for different geoJSON layers listing features
+- Clicking on feature in sidebar pans and zooms to feature
+- Features filterable and searchable
+- Tooltip shown when feature clicked on in map - should be well formatted and easy to read
 
 ---
 
@@ -64,31 +68,8 @@ KartVis is a simple, focused web app for visualizing and exploring geospatial po
 - On-click popup or panel for point properties.
 - Search/filter by attribute (e.g., `REFNO`, `PSID`).
 - Basic Tailwind-based styling and responsive layout.
+- 
 
----
-
-## 🚀 Stretch goals (v2+)
-
-- Export filtered sets to new GeoJSON/draw on map
-- Marker clustering and lazy-loading for larger datasets
-- Server-side API to query features (pagination)
-- Mapbox-styles, basemap selection, or vector tiles
-- Authentication and user-saved bookmarks
-
----
-
-## 🛣 Implementation roadmap & tasks
-
-1. Create global layout and header (taking `app/layout.js` and `app/page.js` as base)
-   - Acceptance: Click a header and open a dummy settings modal.
-2. Select map library and add `Map.jsx` that loads `src/data/prv_punkt.geojson`
-   - Tasks: install `leaflet` or `maplibre-gl`; add marker layer; center and zoom to extents.
-3. Add point popups or `SidePanel` to show feature properties
-   - Acceptance: clicking a marker displays a card with JSON-like key-value property list.
-4. Add filters or search box
-   - Tasks: add TextInput; filter feature list; reflect on map markers.
-5. Polish styles and responsive behavior
-6. Build small tests for data loading & component rendering
 
 ---
 
