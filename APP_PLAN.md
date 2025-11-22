@@ -17,13 +17,11 @@ KartVis is a simple, focused web app for visualizing and exploring geospatial po
 
 ## 🧩 Tech stack
 
-- Next.js (app router) — project scaffold is already in place
-- JavaScript
-- React + Tailwind CSS — visual styling
-- Map library suggestions:
-  - Leaflet (lightweight; many plugins) or
-  - MapLibre GL JS (WebGL-based; vector tiles & higher performance)
-- GeoJSON source: `src/data/prv_punkt.geojson`, `src/data/ult_punkt.geojson`, `src/data/utl_ledning.geojson`
+- **Next.js 16** (app router) — project scaffold complete
+- **JavaScript** (no TypeScript)
+- **React 19** + **Tailwind CSS v4** — visual styling
+- **Map library: Leaflet** via **react-leaflet** — chosen for lightweight, plugin-rich ecosystem
+- **GeoJSON source**: `src/data/prv_punkt.geojson`, `src/data/ult_punkt.geojson`, `src/data/utl_ledning.geojson`
 
 ---
 
@@ -37,7 +35,8 @@ KartVis is a simple, focused web app for visualizing and exploring geospatial po
 
 ### Data file descriptions (summary)
 
-1) src/data/prv_punkt.geojson
+1. src/data/prv_punkt.geojson
+
 - Short name: prv_punkt
 - CRS: CRS84 (lon/lat)
 - Geometry: Point
@@ -47,7 +46,8 @@ KartVis is a simple, focused web app for visualizing and exploring geospatial po
 - Default UI fields suggested: REF (or REFNO), PSID, DATEREG, DATECHANGE, TYPE/FCODE
 - Notes: small dataset, some REF/STATION values are null — UI should handle missing values gracefully; utm_x/utm_y are available as attributes if projected coords are required later
 
-2) src/data/ult_punkt.geojson
+2. src/data/ult_punkt.geojson
+
 - Short name: ult_punkt
 - CRS: CRS84 (lon/lat) — re-exported to CRS84 and confirmed
 - Geometry: Point
@@ -57,7 +57,8 @@ KartVis is a simple, focused web app for visualizing and exploring geospatial po
 - Default UI fields suggested: REF, PSID, STATION, YEAR, Z, DATEREG
 - Notes: now CRS-aligned with the other layers so no client-side reprojection is required; some numeric fields (YEAR, Z) may be 0 or null and should be displayed carefully
 
-3) src/data/utl_ledning.geojson
+3. src/data/utl_ledning.geojson
+
 - Short name: utl_ledning
 - CRS: CRS84 (lon/lat)
 - Geometry: LineString / MultiLineString
@@ -96,10 +97,24 @@ KartVis is a simple, focused web app for visualizing and exploring geospatial po
 
 ## ✅ MVP features (v1)
 
-- Map with point markers for `prv_punkt.geojson`.
-- On-click popup or panel for point properties.
-- Search/filter by attribute (e.g., `REFNO`, `PSID`).
-- Basic Tailwind-based styling and responsive layout.
+**Implemented:**
+
+- ✅ Map with point markers for `prv_punkt.geojson`
+- ✅ Interactive CircleMarkers with click handlers
+- ✅ Popup on marker click showing REF, REFNO, DATEREG
+- ✅ SidePanel listing all features with click-to-select
+- ✅ Two-way selection sync (map ↔ sidebar)
+- ✅ FlyTo animation when feature selected
+- ✅ Basic Tailwind styling with responsive layout
+
+**Remaining for MVP:**
+
+- 🔲 Tabs for switching between datasets (`prv_punkt`, `ult_punkt`, `utl_ledning`)
+- 🔲 Search/filter by attribute (REF, PSID, LSID)
+- 🔲 Enhanced feature details panel (more properties displayed)
+- 🔲 LineString rendering for `utl_ledning.geojson`
+- 🔲 Responsive sidebar collapse on mobile
+- 🔲 Layer toggle for performance with large datasets
 
 ---
 
@@ -135,26 +150,52 @@ npm run build
 
 ## 📅 Milestones & time estimate
 
-- MVP (map + popup) — 1 day
-- Filtering & side panel — 1 day
+**Completed:**
+
+- ✅ MVP (map + popup + basic sidebar) — complete
+- ✅ Core interaction (click marker/list item) — complete
+
+**Remaining:**
+
+- Tabs & multi-dataset support — 0.5 day
+- Filtering & search — 0.5 day
 - Styling & responsive polish — 0.5 day
-- Cluster & large dataset support — 1 day
+- LineString rendering & layer toggles — 0.5 day
+- Testing & QA — 0.5 day
+
+**Total remaining: ~2.5 days**
 
 ---
 
-## ❓ Questions for you
+## 🎯 Current status (as of 2025-11-22)
 
-- Which map library do you prefer (Leaflet or MapLibre)?
-- Do you plan to host large datasets or just these local GeoJSONs?
-- Any extra attributes or UI elements you want in v1 (search, date picker)?
+**Working:**
+
+- Map renders with CircleMarkers from `prv_punkt.geojson`
+- Click marker → shows popup and highlights in sidebar
+- Click sidebar item → pans/zooms map to feature
+- Selection state synced between map and sidebar
+- Clean header + sidebar layout
+
+**Next priorities:**
+
+1. Add tabbed interface for switching datasets
+2. Implement search/filter functionality
+3. Add LineString support for utility network layer
+4. Responsive sidebar (collapse on mobile)
+5. Enhanced detail view with more properties
 
 ---
 
-## Next steps
+## 🚀 Next steps
 
-- Pick a map library and I’ll scaffold `src/components/Map.jsx` and wire up `prv_punkt.geojson`.
-- Or, if you prefer, the next step is a written task-by-task breakdown I can convert to `issue` cards in GitHub.
+1. **Add tabs** to sidebar for `prv_punkt`, `ult_punkt`, `utl_ledning`
+2. **Implement search** input filtering features by REF/PSID/LSID
+3. **Render LineStrings** for `utl_ledning.geojson` with Polyline component
+4. **Layer toggle** UI for performance with large line dataset
+5. **Responsive improvements** — collapsible sidebar on small screens
+6. **Testing** — basic unit tests for data loading and component rendering
 
 ---
 
-_Created: 2025-11-21._
+_Created: 2025-11-21 | Updated: 2025-11-22_

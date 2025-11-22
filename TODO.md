@@ -1,66 +1,139 @@
 # KartVis — TODO (MVP & Next)
 
-## Decisions (blockers)
+## ✅ Completed
+
 - [x] Choose map library: Leaflet (chosen)
-  - Acceptance: APP_PLAN.md notes Leaflet
 - [x] Branching preference: work on `main` (solo workflow)
-  - Acceptance: workflow recorded in README or this file
+- [x] Project: APP_PLAN.md & docs finalized
+- [x] Add map dependency
+  - [x] Add `leaflet` and `react-leaflet` to package.json
+  - [x] Import Leaflet CSS in Map.jsx
+- [x] Scaffold Map component
+  - [x] Create `src/components/Map.jsx` (client component)
+  - [x] Load `src/data/prv_punkt.geojson` and render markers
+  - [x] Fit map to data bounds
+- [x] Scaffold SidePanel
+  - [x] Create `src/components/SidePanel.jsx`
+  - [x] Click feature in list → pan & zoom map to feature (FlyTo implemented)
+- [x] Marker interaction & popups
+  - [x] Clicking marker shows formatted tooltip/popup
+  - [x] SidePanel shows selected feature properties
+  - [x] Two-way sync: map ↔ sidebar selection
 
-## MVP (v1) — must-haves
-- [ ] Project: APP_PLAN.md & docs finalized
-  - Acceptance: APP_PLAN.md contains data descriptions, Leaflet decision, UI items
-- [ ] Add map dependency
-  - Tasks:
-    - [ ] Add `leaflet` and `react-leaflet` to package.json
-    - [ ] Import Leaflet CSS in global client code (e.g., app/layout.js)
-  - Acceptance: project builds locally with new deps; CSS loads without errors
-- [ ] Scaffold Map component
-  - Tasks:
-    - [ ] Create `src/components/Map.jsx` (client component)
-    - [ ] Load `src/data/prv_punkt.geojson` and render markers
-    - [ ] Fit map to data bounds
-  - Acceptance: markers display and map fits bounds
-- [ ] Scaffold SidePanel + tabbed list
-  - Tasks:
-    - [ ] Create `src/components/SidePanel.jsx`
-    - [ ] Implement tabs for `prv_punkt`, `ult_punkt`, `utl_ledning`
-    - [ ] Click feature in list → pan & zoom map to feature
-  - Acceptance: clicking list item focuses map and shows details
-- [ ] Marker interaction & popups
-  - Tasks:
-    - [ ] Clicking marker shows formatted tooltip/popup
-    - [ ] SidePanel shows selected feature properties
-  - Acceptance: click a marker → popup + side panel show expected fields
-- [ ] Filter / search
-  - Tasks:
-    - [ ] Add search input (search by REF, PSID, LSID)
-    - [ ] Filter both list and map markers/lines
-  - Acceptance: typing updates visible features immediately
+---
 
-## Polish (short)
-- [ ] Responsive layout
-  - Acceptance: side panel collapses on small screens; map fills view
-- [ ] Styling: Tailwind tweaks & icons
-  - Acceptance: header + settings modal present; consistent spacing/typography
+## 🎯 MVP (v1) — Remaining must-haves
 
-## Performance & dataset handling
-- [ ] Layer toggles for utl_ledning
-  - Acceptance: can hide/show heavy line layer
-- [ ] Consider line simplification or lazy-load for large datasets (later)
-  - Acceptance: UI remains responsive with utl_ledning toggled on
+### 1. Tabbed dataset interface
 
-## Tests & CI
-- [ ] Add a minimal unit test for data loader
-  - Acceptance: `npm test` runs and passes
-- [ ] Add a simple CI workflow (optional)
-  - Acceptance: PRs run a lint/build job
+- [ ] Add tab component to SidePanel header
+- [ ] Tab options: `prv_punkt`, `ult_punkt`, `utl_ledning`
+- [ ] Load selected dataset dynamically
+- [ ] Update map markers/lines based on active tab
+- **Acceptance**: user can switch between datasets; map updates accordingly
 
-## Stretch (later)
-- [ ] Marker clustering
+### 2. Search & filter functionality
+
+- [ ] Add search input to SidePanel header
+- [ ] Filter features by REF, PSID, LSID (case-insensitive)
+- [ ] Update both sidebar list and map markers in real-time
+- [ ] Clear filter button/icon
+- **Acceptance**: typing filters visible features immediately
+
+### 3. LineString support for utility network
+
+- [ ] Add Polyline component to Map.jsx
+- [ ] Render `utl_ledning.geojson` as line features
+- [ ] Style lines differently from points
+- [ ] Add click handler for line features
+- [ ] Show line properties in popup (LSID, FCODE, LENGTH, MATERIAL)
+- **Acceptance**: utility lines display and are interactive
+
+### 4. Enhanced feature detail panel
+
+- [ ] Expand selected feature detail view in sidebar
+- [ ] Show all relevant properties (not just title + PSID)
+- [ ] Format dates and numeric fields nicely
+- [ ] Handle null/missing values gracefully
+- **Acceptance**: full property list visible for selected feature
+
+---
+
+## 🎨 Polish (short-term)
+
+### 5. Responsive layout improvements
+
+- [ ] Sidebar collapses to hamburger menu on mobile (<768px)
+- [ ] Map fills full viewport on mobile when sidebar collapsed
+- [ ] Smooth transition animations
+- **Acceptance**: app usable on mobile devices
+
+### 6. Styling refinements
+
+- [ ] Add icons to tabs and search input (lucide-react or heroicons)
+- [ ] Consistent spacing and typography
+- [ ] Dark mode support (if needed)
+- [ ] Loading spinner while fetching GeoJSON
+- **Acceptance**: polished, professional appearance
+
+---
+
+## ⚡ Performance & dataset handling
+
+### 7. Layer toggle controls
+
+- [ ] Add checkbox/toggle for each layer in sidebar
+- [ ] Allow hiding/showing individual layers
+- [ ] Remember toggle state
+- **Acceptance**: can hide/show `utl_ledning` for better performance
+
+### 8. Optimize large datasets
+
+- [ ] Consider line simplification for `utl_ledning` (if slow)
+- [ ] Lazy-load or paginate features if needed
+- [ ] Debounce search input
+- **Acceptance**: UI remains responsive with all layers visible
+
+---
+
+## 🧪 Tests & CI
+
+### 9. Unit tests
+
+- [ ] Test data loading utilities
+- [ ] Test SidePanel filtering logic
+- [ ] Test Map component rendering
+- [ ] Add test script to package.json
+- **Acceptance**: `npm test` runs and passes
+
+### 10. CI workflow (optional)
+
+- [ ] GitHub Actions workflow for lint + build
+- [ ] Run on PRs and main branch pushes
+- **Acceptance**: automated checks on every push
+
+---
+
+## 🚀 Stretch goals (post-MVP)
+
+- [ ] Marker clustering for dense point datasets
 - [ ] Export filtered features as GeoJSON
-- [ ] Server API & paging for large datasets
-- [ ] Basemap selection & vector styles
+- [ ] Server-side API with pagination for huge datasets
+- [ ] Basemap selection (OSM, Satellite, Terrain)
+- [ ] Vector tile support (MapLibre GL JS migration)
+- [ ] Date range picker for temporal filtering
+- [ ] Draw tools for spatial queries
 
-## Done / Archive
-- [ ] Tag release v0.1 when MVP complete
-  - Acceptance: git tag `v0.1` created and pushed
+---
+
+## 📦 Release
+
+- [ ] Tag release `v0.1` when MVP complete
+  - **Acceptance**: git tag `v0.1` created and pushed
+- [ ] Update README with screenshots and usage instructions
+- [ ] Deploy to Vercel or similar platform
+  - **Acceptance**: live demo URL available
+
+---
+
+_Last updated: 2025-11-22_
