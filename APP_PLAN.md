@@ -12,6 +12,7 @@ KartVis is a simple, focused web app for visualizing and exploring geospatial po
 - Provide a minimal, clean UI: header bar with `KartVis`, map in the main area, and a simple side panel for feature details.
 - Let users click a point to see details and filter by attributes.
 - Keep the UI lightweight and fast — prefer client-side rendering for initial prototypes.
+- **Language: Norwegian (Bokmål)** — all UI text, labels, and messages must be in Norwegian. Instructions and technical documentation can remain in English.
 
 ---
 

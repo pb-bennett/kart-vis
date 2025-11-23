@@ -1,31 +1,140 @@
-"use client";
+'use client';
 
-export default function SidePanel({ features, selectedFeature, onSelect }) {
+import Image from 'next/image';
+
+export default function SidePanel({
+  features,
+  selectedFeature,
+  onSelect,
+  activeLayer,
+  onLayerChange,
+}) {
+  const layers = [
+    { id: 'prv_punkt', name: 'Prøvetakingspunkt', type: 'point' },
+    { id: 'ult_punkt', name: 'Overløpspunkt', type: 'point' },
+    { id: 'utl_ledning', name: 'Overløpsledning', type: 'line' },
+  ];
+
+  const currentLayer = layers.find((l) => l.id === activeLayer);
+  const title =
+    currentLayer?.type === 'line'
+      ? `Ledninger (${features.length})`
+      : `Punkter (${features.length})`;
+
   return (
-    <aside className="w-80 bg-white border-r dark:bg-gray-900 h-screen overflow-y-auto">
-      <div className="p-4">
-        <h2 className="text-lg font-semibold">Points ({features.length})</h2>
+    <aside
+      className="w-80 bg-white border-r h-screen overflow-y-auto flex flex-col"
+      style={{ borderColor: '#e5e7eb' }}
+    >
+      {/* Logo */}
+      <div
+        className="p-4 border-b"
+        style={{ backgroundColor: '#ffffff', borderColor: '#656263' }}
+      >
+        <Image
+          src="/FK_logo.svg"
+          alt="Færder Kommune"
+          width={300}
+          height={100}
+          className="w-full h-auto"
+          priority
+        />
       </div>
-      <ul className="p-2">
+
+      {/* Layer tabs */}
+      <div className="border-b" style={{ borderColor: '#e5e7eb' }}>
+        <div className="flex">
+          {layers.map((layer) => (
+            <button
+              key={layer.id}
+              onClick={() => onLayerChange(layer.id)}
+              className={`flex-1 px-2 py-2.5 text-xs font-medium border-b-2 transition-colors ${
+                activeLayer === layer.id
+                  ? 'text-white'
+                  : 'border-transparent hover:bg-gray-50'
+              }`}
+              style={
+                activeLayer === layer.id
+                  ? {
+                      borderColor: '#4782cb',
+                      backgroundColor: '#4782cb',
+                    }
+                  : { color: '#656263' }
+              }
+            >
+              {layer.name}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Header */}
+      <div
+        className="px-4 py-3 border-b"
+        style={{ borderColor: '#e5e7eb', backgroundColor: '#f9fafb' }}
+      >
+        <h2
+          className="text-base font-semibold"
+          style={{ color: '#656263' }}
+        >
+          {title}
+        </h2>
+      </div>
+      {/* Feature list */}
+      <ul className="p-2 flex-1 overflow-y-auto">
         {features.map((f) => {
           const key = f.properties.fid;
-          const title = f.properties.REF || `PSID ${f.properties.PSID}`;
+          let title, subtitle;
+
+          if (activeLayer === 'utl_ledning') {
+            // Line features
+            title = f.properties.FCODE
+              ? `${f.properties.FCODE} - LSID ${f.properties.LSID}`
+              : `LSID ${f.properties.LSID}`;
+            subtitle = `${f.properties.LENGTH?.toFixed(0) || '?'} m`;
+          } else {
+            // Point features
+            title = f.properties.REF || `PSID ${f.properties.PSID}`;
+            subtitle = `PSID: ${f.properties.PSID}`;
+          }
+
           const isSelected =
             selectedFeature &&
             selectedFeature.properties &&
             selectedFeature.properties.fid === key;
+
           return (
             <li
               key={key}
-              className={`cursor-pointer p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 ${
-                isSelected ? "bg-gray-200 dark:bg-gray-800" : ""
-              }`}
+              className="cursor-pointer p-2 rounded-md transition-colors"
+              style={{
+                backgroundColor: isSelected
+                  ? '#e8f1fc'
+                  : 'transparent',
+                borderLeft: isSelected
+                  ? '3px solid #4782cb'
+                  : '3px solid transparent',
+              }}
+              onMouseEnter={(e) => {
+                if (!isSelected)
+                  e.currentTarget.style.backgroundColor = '#f3f4f6';
+              }}
+              onMouseLeave={(e) => {
+                if (!isSelected)
+                  e.currentTarget.style.backgroundColor =
+                    'transparent';
+              }}
               onClick={() => onSelect && onSelect(f)}
               title={title}
             >
-              <div className="text-sm font-medium">{title}</div>
-              <div className="text-xs text-gray-500">
-                PSID: {f.properties.PSID}
+              <div
+                className="text-sm font-medium"
+                style={{ color: '#656263' }}
+              >
+                {title}
+              </div>
+              <div className="text-xs" style={{ color: '#9ca3af' }}>
+                {subtitle}
               </div>
             </li>
           );
