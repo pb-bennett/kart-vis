@@ -39,14 +39,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-gray-100">
-      <header
-        className="text-white py-2 px-8"
-        style={{ backgroundColor: '#4782cb' }}
-      >
-        <h1 className="text-xl font-semibold">KartVis</h1>
-      </header>
-
-      <div className="flex h-[calc(100vh-52px)]">
+      <div className="flex h-screen">
         <SidePanel
           features={activeFeatures}
           selectedFeature={selected}

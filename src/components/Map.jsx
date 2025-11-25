@@ -64,11 +64,23 @@ export default function Map({
   const [basemap, setBasemap] = useState('geonorgeGraatone');
   const [currentZoom, setCurrentZoom] = useState(11);
 
-  // Combine all layers for rendering on the map
+  // Combine all layers for rendering on the map, adding layer source to each feature
   const allFeatures = [
-    ...(allLayers.prv_punkt || []),
-    ...(allLayers.ult_punkt || []),
-    ...(allLayers.utl_ledning || []),
+    ...(allLayers.prv_punkt || []).map((f, idx) => ({
+      ...f,
+      _layer: 'prv_punkt',
+      _index: idx,
+    })),
+    ...(allLayers.ult_punkt || []).map((f, idx) => ({
+      ...f,
+      _layer: 'ult_punkt',
+      _index: idx,
+    })),
+    ...(allLayers.utl_ledning || []).map((f, idx) => ({
+      ...f,
+      _layer: 'utl_ledning',
+      _index: idx,
+    })),
   ];
 
   // Compute initial center and zoom to fit bounds
@@ -199,14 +211,14 @@ export default function Map({
               f.geometry.type === 'LineString' ||
               f.geometry.type === 'MultiLineString'
           )
-          .map((f, index) => {
+          .map((f) => {
             const isSelected =
               selectedFeature &&
               selectedFeature.properties &&
               selectedFeature.properties.fid === f.properties.fid;
 
-            // Create unique key combining type and fid
-            const uniqueKey = `line-${f.properties.fid || index}`;
+            // Create unique key using layer and index
+            const uniqueKey = `${f._layer}-${f._index}`;
 
             // Render lines (MultiLineString or LineString)
             let positions;
@@ -299,17 +311,27 @@ export default function Map({
           disableClusteringAtZoom={16}
           spiderfyOnMaxZoom={true}
           showCoverageOnHover={false}
+          iconCreateFunction={(cluster) => {
+            const count = cluster.getChildCount();
+            // Scale size based on count, but keep it reasonable
+            const size = Math.min(40 + Math.sqrt(count) * 4, 80);
+            return L.divIcon({
+              html: `<div style="background-color: #22c55e; color: white; border-radius: 50%; width: ${size}px; height: ${size}px; display: flex; align-items: center; justify-content: center; font-weight: bold; border: 3px solid white; box-shadow: 0 2px 8px rgba(0,0,0,0.3);">${count}</div>`,
+              className: 'custom-cluster-icon',
+              iconSize: [size, size],
+            });
+          }}
         >
           {allFeatures
             .filter((f) => f.geometry.type === 'Point')
-            .map((f, index) => {
+            .map((f) => {
               const isSelected =
                 selectedFeature &&
                 selectedFeature.properties &&
                 selectedFeature.properties.fid === f.properties.fid;
 
-              // Create unique key combining type and fid
-              const uniqueKey = `point-${f.properties.fid || index}`;
+              // Create unique key using layer and index
+              const uniqueKey = `${f._layer}-${f._index}`;
 
               // Render points with different styles based on layer
               const { coordinates } = f.geometry;
