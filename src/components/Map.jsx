@@ -408,10 +408,12 @@ export default function Map({
                             PSID: {f.properties.PSID}
                           </div>
                           <div className="text-xs text-gray-600">
-                            Stasjon: {f.properties.STATION || 'Ukjent'}
+                            Stasjon:{' '}
+                            {f.properties.STATION || 'Ukjent'}
                           </div>
                           <div className="text-xs text-gray-600">
-                            Dato reg: {f.properties.DATEREG || 'Ukjent'}
+                            Dato reg:{' '}
+                            {f.properties.DATEREG || 'Ukjent'}
                           </div>
                         </div>
                       </Popup>
