@@ -11,7 +11,10 @@ import {
   Polyline,
   Popup,
   useMap,
+  Marker,
+  Rectangle,
 } from 'react-leaflet';
+import L from 'leaflet';
 import MarkerClusterGroup from 'react-leaflet-cluster';
 
 function FlyTo({ coords, zoom = 16 }) {
@@ -118,9 +121,9 @@ export default function Map({
   return (
     <div className="h-full relative">
       {/* TEMP: Zoom Level Display - REMOVE WHEN DONE */}
-      <div className="absolute top-4 left-4 z-1000 bg-pink-500 text-white font-bold rounded-lg shadow-lg p-3 text-2xl">
+      {/* <div className="absolute top-4 left-4 z-1000 bg-pink-500 text-white font-bold rounded-lg shadow-lg p-3 text-2xl">
         ZOOM: {currentZoom.toFixed(1)}
-      </div>
+      </div> */}
 
       {/* Basemap selector */}
       <div
@@ -166,7 +169,7 @@ export default function Map({
             </span>
           </div>
           <div className="flex items-center gap-2">
-            <div className="w-3 h-3 rounded-full bg-orange-400 border-2 border-orange-600"></div>
+            <div className="w-3 h-3 bg-orange-400 border-2 border-orange-600"></div>
             <span style={{ color: '#656263' }}>Overløpspunkt</span>
           </div>
           <div className="flex items-center gap-2">
@@ -340,22 +343,84 @@ export default function Map({
               // Determine point type and styling
               let pointColor, pointFillColor, pointRadius, pointLabel;
               const fcode = f.properties.FCODE;
+              const isOverflow = fcode === 'OVL' || f.properties.FUNC;
 
               // Check if it's from prv_punkt (has REFNO) or ult_punkt (has OVL FCODE)
-              if (fcode === 'OVL' || f.properties.FUNC) {
-                // Overløpspunkt (ult_punkt) - Orange/Yellow
+              if (isOverflow) {
+                // Overløpspunkt (ult_punkt) - Orange/Yellow SQUARE
                 pointColor = '#f97316';
                 pointFillColor = '#fb923c';
                 pointRadius = 7;
-                pointLabel = '○'; // Circle symbol for overflow
+                pointLabel = '□'; // Square symbol for overflow
               } else {
-                // Prøvetakingspunkt (prv_punkt) - Blue
+                // Prøvetakingspunkt (prv_punkt) - Blue CIRCLE
                 pointColor = '#2563eb';
                 pointFillColor = '#3b82f6';
                 pointRadius = 6;
                 pointLabel = '●'; // Filled circle for sampling
               }
 
+              // For overflow points, use a square marker (DivIcon)
+              if (isOverflow) {
+                const size = pointRadius * 2.5; // Convert radius to pixel size
+                const glowSize = size + 14;
+                const icon = L.divIcon({
+                  html: `<div style="background-color: ${pointFillColor}; border: 2px solid ${pointColor}; width: ${size}px; height: ${size}px;"></div>`,
+                  className: 'square-marker',
+                  iconSize: [size, size],
+                  iconAnchor: [size / 2, size / 2],
+                });
+
+                return (
+                  <React.Fragment key={uniqueKey}>
+                    {/* Glow effect for selected square point */}
+                    {isSelected && (
+                      <Marker
+                        position={latlng}
+                        icon={L.divIcon({
+                          html: `<div style="background-color: #fbbf24; opacity: 0.2; border: 3px solid #fbbf24; width: ${glowSize}px; height: ${glowSize}px;"></div>`,
+                          className: 'square-marker-glow',
+                          iconSize: [glowSize, glowSize],
+                          iconAnchor: [glowSize / 2, glowSize / 2],
+                        })}
+                      />
+                    )}
+                    {/* Actual square point */}
+                    <Marker
+                      position={latlng}
+                      icon={icon}
+                      eventHandlers={{
+                        click: (e) => {
+                          if (e.originalEvent) {
+                            e.originalEvent.stopPropagation();
+                          }
+                          onSelect && onSelect(f);
+                        },
+                      }}
+                    >
+                      <Popup>
+                        <div className="text-sm">
+                          <div className="font-semibold">
+                            {f.properties.REF ||
+                              `PSID ${f.properties.PSID}`}
+                          </div>
+                          <div className="text-xs text-gray-600">
+                            PSID: {f.properties.PSID}
+                          </div>
+                          <div className="text-xs text-gray-600">
+                            Stasjon: {f.properties.STATION || 'Ukjent'}
+                          </div>
+                          <div className="text-xs text-gray-600">
+                            Dato reg: {f.properties.DATEREG || 'Ukjent'}
+                          </div>
+                        </div>
+                      </Popup>
+                    </Marker>
+                  </React.Fragment>
+                );
+              }
+
+              // For sampling points, use circle markers
               return (
                 <React.Fragment key={uniqueKey}>
                   {/* Glow effect for selected point */}
