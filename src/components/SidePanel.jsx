@@ -1,5 +1,6 @@
 'use client';
 
+import { useState, useMemo } from 'react';
 import Image from 'next/image';
 
 export default function SidePanel({
@@ -9,17 +10,49 @@ export default function SidePanel({
   activeLayer,
   onLayerChange,
 }) {
+  const [searchQuery, setSearchQuery] = useState('');
+
   const layers = [
     { id: 'prv_punkt', name: 'Prøvetakingspunkt', type: 'point' },
     { id: 'ult_punkt', name: 'Overløpspunkt', type: 'point' },
     { id: 'utl_ledning', name: 'Overløpsledning', type: 'line' },
   ];
 
+  // Filter features based on search query
+  const filteredFeatures = useMemo(() => {
+    if (!searchQuery.trim() || activeLayer !== 'prv_punkt') {
+      return features;
+    }
+
+    const query = searchQuery.toLowerCase().trim();
+    return features.filter((f) => {
+      const navn = (f.properties.navn || '').toLowerCase();
+      const vannlok = (
+        f.properties['vannlok-kode'] || ''
+      ).toLowerCase();
+      return navn.includes(query) || vannlok.includes(query);
+    });
+  }, [features, searchQuery, activeLayer]);
+
   const currentLayer = layers.find((l) => l.id === activeLayer);
   const title =
     currentLayer?.type === 'line'
-      ? `Ledninger (${features.length})`
-      : `Punkter (${features.length})`;
+      ? `Ledninger (${filteredFeatures.length}${
+          searchQuery && activeLayer === 'prv_punkt'
+            ? ` av ${features.length}`
+            : ''
+        })`
+      : `Punkter (${filteredFeatures.length}${
+          searchQuery && activeLayer === 'prv_punkt'
+            ? ` av ${features.length}`
+            : ''
+        })`;
+
+  // Clear search when switching layers
+  const handleLayerChange = (layerId) => {
+    setSearchQuery('');
+    onLayerChange(layerId);
+  };
 
   return (
     <aside
@@ -47,7 +80,7 @@ export default function SidePanel({
           {layers.map((layer) => (
             <button
               key={layer.id}
-              onClick={() => onLayerChange(layer.id)}
+              onClick={() => handleLayerChange(layer.id)}
               className={`flex-1 px-2 py-2.5 text-xs font-medium border-b-2 transition-colors ${
                 activeLayer === layer.id
                   ? 'text-white'
@@ -68,21 +101,46 @@ export default function SidePanel({
         </div>
       </div>
 
-      {/* Header */}
-      <div
-        className="px-4 py-3 border-b"
-        style={{ borderColor: '#e5e7eb', backgroundColor: '#f9fafb' }}
-      >
-        <h2
-          className="text-base font-semibold"
-          style={{ color: '#656263' }}
+      {/* Search box - only show for prv_punkt */}
+      {activeLayer === 'prv_punkt' && (
+        <div
+          className="px-3 py-2 border-b"
+          style={{ borderColor: '#e5e7eb' }}
         >
-          {title}
-        </h2>
-      </div>
+          <input
+            type="text"
+            placeholder="Søk i navn eller vannlok..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full px-3 py-2 text-sm border rounded-md focus:outline-none focus:ring-2"
+            style={{
+              borderColor: '#e5e7eb',
+              color: '#656263',
+            }}
+          />
+        </div>
+      )}
+
+      {/* Header - only show for non-prv_punkt layers */}
+      {activeLayer !== 'prv_punkt' && (
+        <div
+          className="px-4 py-3 border-b"
+          style={{
+            borderColor: '#e5e7eb',
+            backgroundColor: '#f9fafb',
+          }}
+        >
+          <h2
+            className="text-base font-semibold"
+            style={{ color: '#656263' }}
+          >
+            {title}
+          </h2>
+        </div>
+      )}
       {/* Feature list */}
       <ul className="p-2 flex-1 overflow-y-auto">
-        {features.map((f) => {
+        {filteredFeatures.map((f) => {
           const key = f.properties.fid;
           let title, subtitle;
 
