@@ -92,10 +92,21 @@ export default function SidePanel({
               ? `${f.properties.FCODE} - LSID ${f.properties.LSID}`
               : `LSID ${f.properties.LSID}`;
             subtitle = `${f.properties.LENGTH?.toFixed(0) || '?'} m`;
+          } else if (activeLayer === 'prv_punkt') {
+            // Prøvetakingspunkt - use navn
+            title = f.properties.navn || `PSID ${f.properties.PSID}`;
+            subtitle =
+              f.properties['vannlok-kode']?.trim() ||
+              (f.properties.PSID ? `PSID: ${f.properties.PSID}` : '');
           } else {
-            // Point features
-            title = f.properties.REF || `PSID ${f.properties.PSID}`;
-            subtitle = `PSID: ${f.properties.PSID}`;
+            // Overløpspunkt (ult_punkt)
+            title =
+              f.properties.navn ||
+              f.properties.REF ||
+              `PSID ${f.properties.PSID}`;
+            subtitle = f.properties.PSID
+              ? `PSID: ${f.properties.PSID}`
+              : '';
           }
 
           const isSelected =

@@ -1,8 +1,8 @@
 'use client';
 
 import 'leaflet/dist/leaflet.css';
-import 'leaflet.markercluster/dist/MarkerCluster.css';
-import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
+// import 'leaflet.markercluster/dist/MarkerCluster.css';
+// import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
 import React, { useEffect, useState } from 'react';
 import {
   MapContainer,
@@ -15,7 +15,7 @@ import {
   Rectangle,
 } from 'react-leaflet';
 import L from 'leaflet';
-import MarkerClusterGroup from 'react-leaflet-cluster';
+// import MarkerClusterGroup from 'react-leaflet-cluster';
 
 function FlyTo({ coords, zoom = 16 }) {
   const map = useMap();
@@ -68,10 +68,11 @@ export default function Map({
   const [currentZoom, setCurrentZoom] = useState(11);
 
   // Combine all layers for rendering on the map, adding layer source to each feature
+  // Order matters: lines first, then ult_punkt, then prv_punkt (so prv_punkt is on top)
   const allFeatures = [
-    ...(allLayers.prv_punkt || []).map((f, idx) => ({
+    ...(allLayers.utl_ledning || []).map((f, idx) => ({
       ...f,
-      _layer: 'prv_punkt',
+      _layer: 'utl_ledning',
       _index: idx,
     })),
     ...(allLayers.ult_punkt || []).map((f, idx) => ({
@@ -79,9 +80,9 @@ export default function Map({
       _layer: 'ult_punkt',
       _index: idx,
     })),
-    ...(allLayers.utl_ledning || []).map((f, idx) => ({
+    ...(allLayers.prv_punkt || []).map((f, idx) => ({
       ...f,
-      _layer: 'utl_ledning',
+      _layer: 'prv_punkt',
       _index: idx,
     })),
   ];
@@ -121,9 +122,9 @@ export default function Map({
   return (
     <div className="h-full relative">
       {/* TEMP: Zoom Level Display - REMOVE WHEN DONE */}
-      {/* <div className="absolute top-4 left-4 z-1000 bg-pink-500 text-white font-bold rounded-lg shadow-lg p-3 text-2xl">
+      <div className="absolute top-4 left-4 z-1000 bg-pink-500 text-white font-bold rounded-lg shadow-lg p-3 text-2xl">
         ZOOM: {currentZoom.toFixed(1)}
-      </div> */}
+      </div>
 
       {/* Basemap selector */}
       <div
@@ -163,7 +164,7 @@ export default function Map({
         </div>
         <div className="space-y-1.5 text-xs">
           <div className="flex items-center gap-2">
-            <div className="w-3 h-3 rounded-full bg-blue-500 border-2 border-blue-600"></div>
+            <div className="w-3 h-3 rounded-full bg-fuchsia-400 border-2 border-fuchsia-600"></div>
             <span style={{ color: '#656263' }}>
               Prøvetakingspunkt
             </span>
@@ -207,108 +208,142 @@ export default function Map({
           maxNativeZoom={basemaps[basemap].maxNativeZoom}
         />
 
-        {/* Render lines (not clustered) */}
-        {allFeatures
-          .filter(
-            (f) =>
-              f.geometry.type === 'LineString' ||
-              f.geometry.type === 'MultiLineString'
-          )
-          .map((f) => {
-            const isSelected =
-              selectedFeature &&
-              selectedFeature.properties &&
-              selectedFeature.properties.fid === f.properties.fid;
+        {/* Render lines (not clustered) - hide at zoom 12 or further out */}
+        {currentZoom >= 13 &&
+          allFeatures
+            .filter(
+              (f) =>
+                f.geometry.type === 'LineString' ||
+                f.geometry.type === 'MultiLineString'
+            )
+            .map((f) => {
+              const isSelected =
+                selectedFeature &&
+                selectedFeature.properties &&
+                selectedFeature.properties.fid === f.properties.fid;
 
-            // Create unique key using layer and index
-            const uniqueKey = `${f._layer}-${f._index}`;
+              // Create unique key using layer and index
+              const uniqueKey = `${f._layer}-${f._index}`;
 
-            // Render lines (MultiLineString or LineString)
-            let positions;
-            if (f.geometry.type === 'MultiLineString') {
-              // MultiLineString has nested arrays
-              positions = f.geometry.coordinates.map((lineCoords) =>
-                lineCoords.map((coord) => [coord[1], coord[0]])
-              );
-            } else {
-              // LineString is a single array of coordinates
-              positions = f.geometry.coordinates.map((coord) => [
-                coord[1],
-                coord[0],
-              ]);
-            }
+              // Render lines (MultiLineString or LineString)
+              let positions;
+              if (f.geometry.type === 'MultiLineString') {
+                // MultiLineString has nested arrays
+                positions = f.geometry.coordinates.map((lineCoords) =>
+                  lineCoords.map((coord) => [coord[1], coord[0]])
+                );
+              } else {
+                // LineString is a single array of coordinates
+                positions = f.geometry.coordinates.map((coord) => [
+                  coord[1],
+                  coord[0],
+                ]);
+              }
 
-            // Line styling based on FCODE
-            const fcode = f.properties.FCODE;
-            let lineColor, lineDash;
-            if (fcode === 'SPO') {
-              lineColor = '#22c55e'; // Green
-              lineDash = '10, 10';
-            } else if (fcode === 'AFO') {
-              lineColor = '#ef4444'; // Red
-              lineDash = '10, 10';
-            } else {
-              lineColor = '#3b82f6'; // Blue (default)
-              lineDash = '10, 10';
-            }
+              // Line styling based on FCODE
+              const fcode = f.properties.FCODE;
+              let lineColor, lineDash;
+              if (fcode === 'SPO') {
+                lineColor = '#22c55e'; // Green
+                lineDash = '10, 10';
+              } else if (fcode === 'AFO') {
+                lineColor = '#ef4444'; // Red
+                lineDash = '10, 10';
+              } else {
+                lineColor = '#3b82f6'; // Blue (default)
+                lineDash = '10, 10';
+              }
 
-            return (
-              <React.Fragment key={uniqueKey}>
-                {/* Glow effect for selected line */}
-                {isSelected && (
+              return (
+                <React.Fragment key={uniqueKey}>
+                  {/* Glow effect for selected line */}
+                  {isSelected && (
+                    <Polyline
+                      positions={positions}
+                      pathOptions={{
+                        color: '#fbbf24',
+                        weight: 8,
+                        opacity: 0.4,
+                        dashArray: lineDash,
+                      }}
+                    />
+                  )}
+                  {/* Actual line */}
                   <Polyline
                     positions={positions}
                     pathOptions={{
-                      color: '#fbbf24',
-                      weight: 8,
-                      opacity: 0.4,
+                      color: lineColor,
+                      weight: 4,
+                      opacity: 0.8,
                       dashArray: lineDash,
                     }}
-                  />
-                )}
-                {/* Actual line */}
-                <Polyline
-                  positions={positions}
-                  pathOptions={{
-                    color: lineColor,
-                    weight: 4,
-                    opacity: 0.8,
-                    dashArray: lineDash,
-                  }}
-                  eventHandlers={{
-                    click: (e) => {
-                      if (e.originalEvent) {
-                        e.originalEvent.stopPropagation();
-                      }
-                      onSelect && onSelect(f);
-                    },
-                  }}
-                >
-                  <Popup>
-                    <div className="text-sm">
-                      <div className="font-semibold">
-                        {f.properties.FCODE || 'Ledning'} - LSID{' '}
-                        {f.properties.LSID}
+                    eventHandlers={{
+                      click: (e) => {
+                        if (e.originalEvent) {
+                          e.originalEvent.stopPropagation();
+                        }
+                        onSelect && onSelect(f);
+                      },
+                    }}
+                  >
+                    <Popup>
+                      <div className="min-w-48">
+                        <div
+                          className="font-semibold text-sm pb-2 mb-2 border-b border-gray-200"
+                          style={{ color: '#4782cb' }}
+                        >
+                          {f.properties.FCODE || 'Ledning'}
+                        </div>
+                        <table className="text-xs w-full">
+                          <tbody className="text-gray-600">
+                            <tr>
+                              <td className="py-0.5 pr-3 font-medium">
+                                LSID
+                              </td>
+                              <td className="py-0.5">
+                                {f.properties.LSID}
+                              </td>
+                            </tr>
+                            <tr>
+                              <td className="py-0.5 pr-3 font-medium">
+                                Lengde
+                              </td>
+                              <td className="py-0.5">
+                                {f.properties.LENGTH?.toFixed(0) ||
+                                  '?'}{' '}
+                                m
+                              </td>
+                            </tr>
+                            <tr>
+                              <td className="py-0.5 pr-3 font-medium">
+                                Materiale
+                              </td>
+                              <td className="py-0.5">
+                                {f.properties.MATERIAL || 'Ukjent'}
+                              </td>
+                            </tr>
+                            <tr>
+                              <td className="py-0.5 pr-3 font-medium">
+                                Dimensjon
+                              </td>
+                              <td className="py-0.5">
+                                {f.properties.DIM || '?'} mm
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <div className="mt-2 pt-2 border-t border-gray-200 text-[10px] text-gray-400">
+                          Overløpsledning
+                        </div>
                       </div>
-                      <div className="text-xs text-gray-600">
-                        Lengde:{' '}
-                        {f.properties.LENGTH?.toFixed(0) || '?'} m
-                      </div>
-                      <div className="text-xs text-gray-600">
-                        Materiale: {f.properties.MATERIAL || 'Ukjent'}
-                      </div>
-                      <div className="text-xs text-gray-600">
-                        Dimensjon: {f.properties.DIM || '?'} mm
-                      </div>
-                    </div>
-                  </Popup>
-                </Polyline>
-              </React.Fragment>
-            );
-          })}
+                    </Popup>
+                  </Polyline>
+                </React.Fragment>
+              );
+            })}
 
-        {/* Render points with clustering */}
-        <MarkerClusterGroup
+        {/* Render points (clustering temporarily disabled) */}
+        {/* <MarkerClusterGroup
           chunkedLoading
           maxClusterRadius={80}
           disableClusteringAtZoom={16}
@@ -324,9 +359,13 @@ export default function Map({
               iconSize: [size, size],
             });
           }}
-        >
+        > */}
+        <>
           {allFeatures
             .filter((f) => f.geometry.type === 'Point')
+            .filter(
+              (f) => f._layer === 'prv_punkt' || currentZoom >= 13
+            ) // Hide ult_punkt at zoom 12 or further
             .map((f) => {
               const isSelected =
                 selectedFeature &&
@@ -353,16 +392,16 @@ export default function Map({
                 pointRadius = 7;
                 pointLabel = '□'; // Square symbol for overflow
               } else {
-                // Prøvetakingspunkt (prv_punkt) - Blue CIRCLE
-                pointColor = '#2563eb';
-                pointFillColor = '#3b82f6';
+                // Prøvetakingspunkt (prv_punkt) - Magenta CIRCLE
+                pointColor = '#c026d3';
+                pointFillColor = '#e879f9';
                 pointRadius = 6;
                 pointLabel = '●'; // Filled circle for sampling
               }
 
               // For overflow points, use a square marker (DivIcon)
               if (isOverflow) {
-                const size = pointRadius * 2.5; // Convert radius to pixel size
+                const size = pointRadius * 2.1; // Convert radius to pixel size
                 const glowSize = size + 14;
                 const icon = L.divIcon({
                   html: `<div style="background-color: ${pointFillColor}; border: 2px solid ${pointColor}; width: ${size}px; height: ${size}px;"></div>`,
@@ -399,21 +438,96 @@ export default function Map({
                       }}
                     >
                       <Popup>
-                        <div className="text-sm">
-                          <div className="font-semibold">
-                            {f.properties.REF ||
-                              `PSID ${f.properties.PSID}`}
+                        <div className="min-w-52">
+                          <div
+                            className="font-semibold text-sm pb-2 mb-2 border-b border-gray-200"
+                            style={{ color: '#4782cb' }}
+                          >
+                            {f.properties.navn ||
+                              f.properties.REF ||
+                              'Overløpspunkt'}
                           </div>
-                          <div className="text-xs text-gray-600">
-                            PSID: {f.properties.PSID}
-                          </div>
-                          <div className="text-xs text-gray-600">
-                            Stasjon:{' '}
-                            {f.properties.STATION || 'Ukjent'}
-                          </div>
-                          <div className="text-xs text-gray-600">
-                            Dato reg:{' '}
-                            {f.properties.DATEREG || 'Ukjent'}
+                          <table className="text-xs w-full">
+                            <tbody className="text-gray-600">
+                              {f.properties.PSID && (
+                                <tr>
+                                  <td className="py-0.5 pr-3 font-medium">
+                                    PSID
+                                  </td>
+                                  <td className="py-0.5">
+                                    {f.properties.PSID}
+                                  </td>
+                                </tr>
+                              )}
+                              {f.properties.STATION && (
+                                <tr>
+                                  <td className="py-0.5 pr-3 font-medium">
+                                    Stasjon
+                                  </td>
+                                  <td className="py-0.5">
+                                    {f.properties.STATION}
+                                  </td>
+                                </tr>
+                              )}
+                              {f.properties.FUNC && (
+                                <tr>
+                                  <td className="py-0.5 pr-3 font-medium">
+                                    Funksjon
+                                  </td>
+                                  <td className="py-0.5">
+                                    {f.properties.FUNC}
+                                  </td>
+                                </tr>
+                              )}
+                              {f.properties.DATEREG && (
+                                <tr>
+                                  <td className="py-0.5 pr-3 font-medium">
+                                    Registrert
+                                  </td>
+                                  <td className="py-0.5">
+                                    {f.properties.DATEREG}
+                                  </td>
+                                </tr>
+                              )}
+                            </tbody>
+                          </table>
+                          {(f.properties.utm_x ||
+                            f.geometry.coordinates) && (
+                            <div className="mt-2 pt-2 border-t border-gray-200">
+                              <div className="text-[10px] text-gray-500 font-medium mb-1">
+                                Koordinater
+                              </div>
+                              <div className="grid grid-cols-[auto_1fr] gap-x-2 text-[10px] text-gray-500 font-mono">
+                                <span>WGS84:</span>
+                                <span>
+                                  {f.geometry.coordinates[1].toFixed(
+                                    6
+                                  )}
+                                  ,{' '}
+                                  {f.geometry.coordinates[0].toFixed(
+                                    6
+                                  )}
+                                </span>
+                                {f.properties.utm_x &&
+                                  f.properties.utm_y && (
+                                    <>
+                                      <span>UTM32N:</span>
+                                      <span>
+                                        {f.properties.utm_x.toFixed(
+                                          2
+                                        )}
+                                        ,{' '}
+                                        {f.properties.utm_y.toFixed(
+                                          2
+                                        )}
+                                      </span>
+                                    </>
+                                  )}
+                              </div>
+                            </div>
+                          )}
+                          <div className="mt-2 pt-2 border-t border-gray-200 text-[10px] text-gray-400">
+                            Overløpspunkt
                           </div>
                         </div>
                       </Popup>
@@ -460,19 +574,93 @@ export default function Map({
                     }}
                   >
                     <Popup>
-                      <div className="text-sm">
-                        <div className="font-semibold">
-                          {f.properties.REF ||
-                            `PSID ${f.properties.PSID}`}
+                      <div className="min-w-56">
+                        <div
+                          className="font-semibold text-sm pb-2 mb-2 border-b border-gray-200"
+                          style={{ color: '#4782cb' }}
+                        >
+                          {f.properties.navn || 'Prøvetakingspunkt'}
                         </div>
-                        <div className="text-xs text-gray-600">
-                          PSID: {f.properties.PSID}
+                        <table className="text-xs w-full">
+                          <tbody className="text-gray-600">
+                            {f.properties['vannlok-kode'] && (
+                              <tr>
+                                <td className="py-0.5 pr-3 font-medium">
+                                  Vannlok
+                                </td>
+                                <td className="py-0.5">
+                                  {f.properties[
+                                    'vannlok-kode'
+                                  ].trim()}
+                                </td>
+                              </tr>
+                            )}
+                            {f.properties.PSID && (
+                              <tr>
+                                <td className="py-0.5 pr-3 font-medium">
+                                  PSID
+                                </td>
+                                <td className="py-0.5">
+                                  {f.properties.PSID}
+                                </td>
+                              </tr>
+                            )}
+                            <tr>
+                              <td className="py-0.5 pr-3 font-medium align-top">
+                                Prøvetyper
+                              </td>
+                              <td className="py-0.5 whitespace-normal">
+                                {[
+                                  f.properties.vannprøve && 'Vann',
+                                  f.properties.sedimentprøve &&
+                                    'Sediment',
+                                  f.properties.Bløtbunnsfauna &&
+                                    'Bløtbunn',
+                                ]
+                                  .filter(Boolean)
+                                  .join(', ') || (
+                                  <span className="italic">
+                                    Ingen registrert
+                                  </span>
+                                )}
+                              </td>
+                            </tr>
+                            {f.properties.DATEREG && (
+                              <tr>
+                                <td className="py-0.5 pr-3 font-medium">
+                                  Registrert
+                                </td>
+                                <td className="py-0.5">
+                                  {f.properties.DATEREG}
+                                </td>
+                              </tr>
+                            )}
+                          </tbody>
+                        </table>
+                        <div className="mt-2 pt-2 border-t border-gray-200">
+                          <div className="text-[10px] text-gray-500 font-medium mb-1">
+                            Koordinater
+                          </div>
+                          <div className="grid grid-cols-[auto_1fr] gap-x-2 text-[10px] text-gray-500 font-mono">
+                            <span>WGS84:</span>
+                            <span>
+                              {f.geometry.coordinates[1].toFixed(6)},{' '}
+                              {f.geometry.coordinates[0].toFixed(6)}
+                            </span>
+                            {f.properties.utm_x &&
+                              f.properties.utm_y && (
+                                <>
+                                  <span>UTM32N:</span>
+                                  <span>
+                                    {f.properties.utm_x.toFixed(2)},{' '}
+                                    {f.properties.utm_y.toFixed(2)}
+                                  </span>
+                                </>
+                              )}
+                          </div>
                         </div>
-                        <div className="text-xs text-gray-600">
-                          Stasjon: {f.properties.STATION || 'Ukjent'}
-                        </div>
-                        <div className="text-xs text-gray-600">
-                          Dato reg: {f.properties.DATEREG || 'Ukjent'}
+                        <div className="mt-2 pt-2 border-t border-gray-200 text-[10px] text-gray-400">
+                          Prøvetakingspunkt
                         </div>
                       </div>
                     </Popup>
@@ -480,7 +668,8 @@ export default function Map({
                 </React.Fragment>
               );
             })}
-        </MarkerClusterGroup>
+        </>
+        {/* </MarkerClusterGroup> */}
 
         {/* Fly to selected feature when it changes */}
         {selectedFeature && selectedFeature.geometry.coordinates && (
