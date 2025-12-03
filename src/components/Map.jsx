@@ -691,9 +691,9 @@ export default function Map({
   return (
     <div className="h-full relative">
       {/* TEMP: Zoom Level Display - REMOVE WHEN DONE */}
-      <div className="absolute top-4 left-4 z-1000 bg-pink-500 text-white font-bold rounded-lg shadow-lg p-3 text-2xl">
+      {/* <div className="absolute top-4 left-4 z-1000 bg-pink-500 text-white font-bold rounded-lg shadow-lg p-3 text-2xl">
         ZOOM: {currentZoom.toFixed(1)}
-      </div>
+      </div> */}
 
       {/* Basemap selector */}
       <div
@@ -882,17 +882,31 @@ export default function Map({
             <span style={{ color: '#656263' }}>Overløpspunkt</span>
           </div>
           <div className="flex items-center gap-2">
-            <div
-              className="w-6 h-0.5 bg-green-500"
-              style={{ borderTop: '2px dashed #22c55e' }}
-            ></div>
+            <svg width="24" height="4" className="flex-shrink-0">
+              <line
+                x1="0"
+                y1="2"
+                x2="24"
+                y2="2"
+                stroke="#22c55e"
+                strokeWidth="2"
+                strokeDasharray="4,3"
+              />
+            </svg>
             <span style={{ color: '#656263' }}>SPO ledning</span>
           </div>
           <div className="flex items-center gap-2">
-            <div
-              className="w-6 h-0.5 bg-red-500"
-              style={{ borderTop: '2px dashed #ef4444' }}
-            ></div>
+            <svg width="24" height="4" className="flex-shrink-0">
+              <line
+                x1="0"
+                y1="2"
+                x2="24"
+                y2="2"
+                stroke="#ef4444"
+                strokeWidth="2"
+                strokeDasharray="4,3"
+              />
+            </svg>
             <span style={{ color: '#656263' }}>AFO ledning</span>
           </div>
         </div>
