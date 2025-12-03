@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import SidePanel from '../components/SidePanel';
 import dynamic from 'next/dynamic';
 
@@ -16,6 +16,12 @@ const Map = dynamic(() => import('../components/Map'), {
 export default function Home() {
   const [selected, setSelected] = useState(null);
   const [activeLayer, setActiveLayer] = useState('prv_punkt');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filters, setFilters] = useState({
+    vannprøve: false,
+    sedimentprøve: false,
+    bløtbunnsfauna: false,
+  });
 
   // Load layers directly from imports
   const allLayers = {
@@ -27,21 +33,82 @@ export default function Home() {
   // Get features for the active layer (for sidebar display)
   const activeFeatures = allLayers[activeLayer] || [];
 
+  // Check if any filter is active
+  const hasActiveFilters = Object.values(filters).some((v) => v);
+
+  // Filter prv_punkt features based on search query and test type filters
+  const filteredPrvPunkt = useMemo(() => {
+    let result = allLayers.prv_punkt;
+
+    // Apply search filter
+    if (searchQuery.trim()) {
+      const query = searchQuery.toLowerCase().trim();
+      result = result.filter((f) => {
+        const navn = (f.properties.navn || '').toLowerCase();
+        const vannlok = (
+          f.properties['vannlok-kode'] || ''
+        ).toLowerCase();
+        return navn.includes(query) || vannlok.includes(query);
+      });
+    }
+
+    // Apply test type filters
+    if (hasActiveFilters) {
+      result = result.filter((f) => {
+        if (filters.vannprøve && f.properties.vannprøve) return true;
+        if (filters.sedimentprøve && f.properties.sedimentprøve)
+          return true;
+        if (filters.bløtbunnsfauna && f.properties.Bløtbunnsfauna)
+          return true;
+        return false;
+      });
+    }
+
+    return result;
+  }, [allLayers.prv_punkt, searchQuery, filters, hasActiveFilters]);
+
+  // Filtered layers for the map - only prv_punkt is filtered
+  const filteredLayers = {
+    prv_punkt: filteredPrvPunkt,
+    ult_punkt: allLayers.ult_punkt,
+    utl_ledning: allLayers.utl_ledning,
+  };
+
+  // Handle layer change - clear search and filters
+  const handleLayerChange = (layerId) => {
+    setSearchQuery('');
+    setFilters({
+      vannprøve: false,
+      sedimentprøve: false,
+      bløtbunnsfauna: false,
+    });
+    setActiveLayer(layerId);
+  };
+
   return (
     <div className="min-h-screen bg-gray-100">
       <div className="flex h-screen">
         <SidePanel
-          features={activeFeatures}
+          features={
+            activeLayer === 'prv_punkt'
+              ? filteredPrvPunkt
+              : activeFeatures
+          }
+          allFeatures={activeFeatures}
           selectedFeature={selected}
           onSelect={setSelected}
           activeLayer={activeLayer}
-          onLayerChange={setActiveLayer}
+          onLayerChange={handleLayerChange}
+          searchQuery={searchQuery}
+          onSearchChange={setSearchQuery}
+          filters={filters}
+          onFiltersChange={setFilters}
         />
         <div className="flex-1">
           <Map
             selectedFeature={selected}
             onSelect={setSelected}
-            allLayers={allLayers}
+            allLayers={filteredLayers}
             activeLayer={activeLayer}
           />
         </div>

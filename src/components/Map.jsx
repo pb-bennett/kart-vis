@@ -131,6 +131,79 @@ function formatDistance(meters) {
   return `${(meters / 1000).toFixed(2)} km`;
 }
 
+// Available label positions (8 directions like a compass)
+const LABEL_POSITIONS = [
+  { x: 1, y: -1, angle: -45 }, // top-right
+  { x: 1, y: 0, angle: 0 }, // right
+  { x: 1, y: 1, angle: 45 }, // bottom-right
+  { x: 0, y: 1, angle: 90 }, // bottom
+  { x: -1, y: 1, angle: 135 }, // bottom-left
+  { x: -1, y: 0, angle: 180 }, // left
+  { x: -1, y: -1, angle: -135 }, // top-left
+  { x: 0, y: -1, angle: -90 }, // top
+];
+
+// Calculate the best label position for a point based on nearby points
+// This positions the label away from clusters of nearby points
+function getBestLabelOffset(
+  currentCoords,
+  allPoints,
+  currentIndex,
+  baseDistance = 22
+) {
+  const [currentLng, currentLat] = currentCoords;
+
+  // Find nearby points (within ~100m at typical zoom levels)
+  const nearbyThreshold = 0.001; // roughly 100m in degrees
+  const nearbyPoints = allPoints.filter((p, idx) => {
+    if (idx === currentIndex) return false;
+    const [lng, lat] = p.geometry.coordinates;
+    const dx = lng - currentLng;
+    const dy = lat - currentLat;
+    return Math.sqrt(dx * dx + dy * dy) < nearbyThreshold;
+  });
+
+  // If no nearby points, use default top-right
+  if (nearbyPoints.length === 0) {
+    return {
+      x: baseDistance,
+      y: -baseDistance,
+    };
+  }
+
+  // Calculate the "center of mass" of nearby points relative to current point
+  let avgDx = 0,
+    avgDy = 0;
+  nearbyPoints.forEach((p) => {
+    const [lng, lat] = p.geometry.coordinates;
+    avgDx += lng - currentLng;
+    avgDy += lat - currentLat;
+  });
+  avgDx /= nearbyPoints.length;
+  avgDy /= nearbyPoints.length;
+
+  // The angle pointing AWAY from the cluster of nearby points
+  const awayAngle = Math.atan2(-avgDy, -avgDx) * (180 / Math.PI);
+
+  // Find the closest predefined position to this angle
+  let bestPosition = LABEL_POSITIONS[0];
+  let smallestAngleDiff = 360;
+
+  LABEL_POSITIONS.forEach((pos) => {
+    let angleDiff = Math.abs(pos.angle - awayAngle);
+    if (angleDiff > 180) angleDiff = 360 - angleDiff;
+    if (angleDiff < smallestAngleDiff) {
+      smallestAngleDiff = angleDiff;
+      bestPosition = pos;
+    }
+  });
+
+  return {
+    x: bestPosition.x * baseDistance,
+    y: bestPosition.y * baseDistance,
+  };
+}
+
 // Measure tool component
 function MeasureTool({
   isActive,
@@ -725,12 +798,15 @@ export default function Map({
           }}
         > */}
         <>
-          {allFeatures
-            .filter((f) => f.geometry.type === 'Point')
-            .filter(
-              (f) => f._layer === 'prv_punkt' || currentZoom >= 13
-            ) // Hide ult_punkt at zoom 12 or further
-            .map((f) => {
+          {(() => {
+            // Get all visible point features for label collision detection
+            const visiblePoints = allFeatures
+              .filter((f) => f.geometry.type === 'Point')
+              .filter(
+                (f) => f._layer === 'prv_punkt' || currentZoom >= 13
+              );
+
+            return visiblePoints.map((f, visibleIndex) => {
               const isSelected =
                 selectedFeature &&
                 selectedFeature.properties &&
@@ -778,9 +854,26 @@ export default function Map({
                 const labelText = f.properties.REF || '';
                 const showLabel = currentZoom >= 14 && labelText;
 
-                // Label offset from the point (pixels)
-                const labelOffsetX = 18;
-                const labelOffsetY = -18;
+                // Get label offset based on nearby points - position away from clusters
+                const labelOffset = getBestLabelOffset(
+                  coordinates,
+                  visiblePoints,
+                  visibleIndex,
+                  22
+                );
+                const labelOffsetX = labelOffset.x;
+                const labelOffsetY = labelOffset.y;
+                // Calculate text position based on offset direction
+                const textLeft =
+                  labelOffset.x < 0
+                    ? `${
+                        labelOffsetX - 3
+                      }px; text-align: right; transform: translateX(-100%)`
+                    : `${labelOffsetX + 3}px`;
+                const textTop =
+                  labelOffset.y < 0
+                    ? labelOffsetY - 10
+                    : labelOffsetY + 2;
 
                 return (
                   <React.Fragment key={uniqueKey}>
@@ -811,8 +904,8 @@ export default function Map({
                               </svg>
                               <div style="
                                 position: absolute;
-                                left: ${labelOffsetX}px;
-                                top: ${labelOffsetY - 10}px;
+                                left: ${textLeft};
+                                top: ${textTop}px;
                                 white-space: nowrap;
                                 font-family: inherit;
                                 font-size: 13px;
@@ -967,8 +1060,27 @@ export default function Map({
               // Label text for prøvetakingspunkt - use navn
               const prvLabelText = f.properties.navn || '';
               const showPrvLabel = currentZoom >= 14 && prvLabelText;
-              const prvLabelOffsetX = 18;
-              const prvLabelOffsetY = -18;
+
+              // Get label offset based on nearby points - position away from clusters
+              const prvLabelOffset = getBestLabelOffset(
+                coordinates,
+                visiblePoints,
+                visibleIndex,
+                22
+              );
+              const prvLabelOffsetX = prvLabelOffset.x;
+              const prvLabelOffsetY = prvLabelOffset.y;
+              // Calculate text position based on offset direction
+              const prvTextLeft =
+                prvLabelOffset.x < 0
+                  ? `${
+                      prvLabelOffsetX - 3
+                    }px; text-align: right; transform: translateX(-100%)`
+                  : `${prvLabelOffsetX + 3}px`;
+              const prvTextTop =
+                prvLabelOffset.y < 0
+                  ? prvLabelOffsetY - 10
+                  : prvLabelOffsetY + 2;
 
               return (
                 <React.Fragment key={uniqueKey}>
@@ -1001,8 +1113,8 @@ export default function Map({
                             </svg>
                             <div style="
                               position: absolute;
-                              left: ${prvLabelOffsetX}px;
-                              top: ${prvLabelOffsetY - 10}px;
+                              left: ${prvTextLeft};
+                              top: ${prvTextTop}px;
                               white-space: nowrap;
                               font-family: inherit;
                               font-size: 13px;
@@ -1155,7 +1267,8 @@ export default function Map({
                   </CircleMarker>
                 </React.Fragment>
               );
-            })}
+            });
+          })()}
         </>
         {/* </MarkerClusterGroup> */}
 

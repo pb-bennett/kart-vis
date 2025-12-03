@@ -1,16 +1,21 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 
 export default function SidePanel({
   features,
+  allFeatures,
   selectedFeature,
   onSelect,
   activeLayer,
   onLayerChange,
+  searchQuery,
+  onSearchChange,
+  filters,
+  onFiltersChange,
 }) {
-  const [searchQuery, setSearchQuery] = useState('');
+  const [showFilters, setShowFilters] = useState(false);
 
   const layers = [
     { id: 'prv_punkt', name: 'Prøvetakingspunkt', type: 'point' },
@@ -18,40 +23,41 @@ export default function SidePanel({
     { id: 'utl_ledning', name: 'Overløpsledning', type: 'line' },
   ];
 
-  // Filter features based on search query
-  const filteredFeatures = useMemo(() => {
-    if (!searchQuery.trim() || activeLayer !== 'prv_punkt') {
-      return features;
-    }
-
-    const query = searchQuery.toLowerCase().trim();
-    return features.filter((f) => {
-      const navn = (f.properties.navn || '').toLowerCase();
-      const vannlok = (
-        f.properties['vannlok-kode'] || ''
-      ).toLowerCase();
-      return navn.includes(query) || vannlok.includes(query);
-    });
-  }, [features, searchQuery, activeLayer]);
+  // Check if any filter is active
+  const hasActiveFilters = Object.values(filters).some((v) => v);
 
   const currentLayer = layers.find((l) => l.id === activeLayer);
+  const showCount =
+    (searchQuery || hasActiveFilters) && activeLayer === 'prv_punkt';
+  const totalCount = allFeatures?.length || features.length;
   const title =
     currentLayer?.type === 'line'
-      ? `Ledninger (${filteredFeatures.length}${
-          searchQuery && activeLayer === 'prv_punkt'
-            ? ` av ${features.length}`
-            : ''
-        })`
-      : `Punkter (${filteredFeatures.length}${
-          searchQuery && activeLayer === 'prv_punkt'
-            ? ` av ${features.length}`
-            : ''
+      ? `Ledninger (${features.length})`
+      : `Punkter (${features.length}${
+          showCount ? ` av ${totalCount}` : ''
         })`;
 
-  // Clear search when switching layers
+  // Handle layer change - also close filters panel
   const handleLayerChange = (layerId) => {
-    setSearchQuery('');
+    setShowFilters(false);
     onLayerChange(layerId);
+  };
+
+  // Toggle a filter
+  const toggleFilter = (filterName) => {
+    onFiltersChange({
+      ...filters,
+      [filterName]: !filters[filterName],
+    });
+  };
+
+  // Clear all filters
+  const clearFilters = () => {
+    onFiltersChange({
+      vannprøve: false,
+      sedimentprøve: false,
+      bløtbunnsfauna: false,
+    });
   };
 
   return (
@@ -101,23 +107,129 @@ export default function SidePanel({
         </div>
       </div>
 
-      {/* Search box - only show for prv_punkt */}
+      {/* Search box and filter - only show for prv_punkt */}
       {activeLayer === 'prv_punkt' && (
-        <div
-          className="px-3 py-2 border-b"
-          style={{ borderColor: '#e5e7eb' }}
-        >
-          <input
-            type="text"
-            placeholder="Søk i navn eller vannlok..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full px-3 py-2 text-sm border rounded-md focus:outline-none focus:ring-2"
-            style={{
-              borderColor: '#e5e7eb',
-              color: '#656263',
-            }}
-          />
+        <div className="border-b" style={{ borderColor: '#e5e7eb' }}>
+          <div className="px-3 py-2 flex gap-2">
+            <input
+              type="text"
+              placeholder="Søk i navn eller vannlok..."
+              value={searchQuery}
+              onChange={(e) => onSearchChange(e.target.value)}
+              className="flex-1 px-3 py-2 text-sm border rounded-md focus:outline-none focus:ring-2"
+              style={{
+                borderColor: '#e5e7eb',
+                color: '#656263',
+              }}
+            />
+            <button
+              onClick={() => setShowFilters(!showFilters)}
+              className="px-2 py-2 border rounded-md transition-colors flex items-center justify-center hover:bg-gray-50"
+              style={{
+                minWidth: '40px',
+                ...(showFilters || hasActiveFilters
+                  ? { borderColor: '#4782cb', color: '#4782cb' }
+                  : { borderColor: '#e5e7eb', color: '#656263' }),
+              }}
+              title="Filter på prøvetype"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5 flex-shrink-0"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={2}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"
+                />
+              </svg>
+              {hasActiveFilters && (
+                <span className="ml-1 text-xs font-bold flex-shrink-0">
+                  {Object.values(filters).filter(Boolean).length}
+                </span>
+              )}
+            </button>
+          </div>
+
+          {/* Filter panel */}
+          {showFilters && (
+            <div
+              className="px-3 py-3 border-t"
+              style={{
+                borderColor: '#e5e7eb',
+                backgroundColor: '#f9fafb',
+              }}
+            >
+              <div className="flex items-center justify-between mb-2">
+                <span
+                  className="text-xs font-semibold"
+                  style={{ color: '#656263' }}
+                >
+                  Filtrer på prøvetype
+                </span>
+                {hasActiveFilters && (
+                  <button
+                    onClick={clearFilters}
+                    className="text-xs hover:underline"
+                    style={{ color: '#4782cb' }}
+                  >
+                    Nullstill
+                  </button>
+                )}
+              </div>
+              <div className="flex flex-col gap-1.5">
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={filters.vannprøve}
+                    onChange={() => toggleFilter('vannprøve')}
+                    className="w-3.5 h-3.5 rounded"
+                    style={{ accentColor: '#4782cb' }}
+                  />
+                  <span
+                    className="text-xs"
+                    style={{ color: '#656263' }}
+                  >
+                    Vannprøve
+                  </span>
+                </label>
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={filters.sedimentprøve}
+                    onChange={() => toggleFilter('sedimentprøve')}
+                    className="w-3.5 h-3.5 rounded"
+                    style={{ accentColor: '#4782cb' }}
+                  />
+                  <span
+                    className="text-xs"
+                    style={{ color: '#656263' }}
+                  >
+                    Sedimentprøve
+                  </span>
+                </label>
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={filters.bløtbunnsfauna}
+                    onChange={() => toggleFilter('bløtbunnsfauna')}
+                    className="w-3.5 h-3.5 rounded"
+                    style={{ accentColor: '#4782cb' }}
+                  />
+                  <span
+                    className="text-xs"
+                    style={{ color: '#656263' }}
+                  >
+                    Bløtbunnsfauna
+                  </span>
+                </label>
+              </div>
+            </div>
+          )}
         </div>
       )}
 
@@ -140,7 +252,7 @@ export default function SidePanel({
       )}
       {/* Feature list */}
       <ul className="p-2 flex-1 overflow-y-auto">
-        {filteredFeatures.map((f) => {
+        {features.map((f) => {
           const key = f.properties.fid;
           let title, subtitle;
 
