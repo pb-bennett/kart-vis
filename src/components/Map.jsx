@@ -22,7 +22,10 @@ function FlyTo({ coords, zoom = 16 }) {
   const map = useMap();
   useEffect(() => {
     if (!coords) return;
-    map.flyTo([coords[1], coords[0]], zoom, { duration: 0.8 });
+    const currentZoom = map.getZoom();
+    // Only zoom in, never zoom out - use max of current zoom and target zoom
+    const targetZoom = Math.max(currentZoom, zoom);
+    map.flyTo([coords[1], coords[0]], targetZoom, { duration: 0.8 });
   }, [coords, zoom, map]);
   return null;
 }
@@ -771,14 +774,13 @@ export default function Map({
                   iconAnchor: [size / 2, size / 2],
                 });
 
-                // Label text - use STATION if available, otherwise REF
-                const labelText =
-                  f.properties.STATION || f.properties.REF || '';
+                // Label text - use REF only
+                const labelText = f.properties.REF || '';
                 const showLabel = currentZoom >= 14 && labelText;
 
                 // Label offset from the point (pixels)
-                const labelOffsetX = 12;
-                const labelOffsetY = -12;
+                const labelOffsetX = 18;
+                const labelOffsetY = -18;
 
                 return (
                   <React.Fragment key={uniqueKey}>
@@ -800,19 +802,22 @@ export default function Map({
                         position={latlng}
                         icon={L.divIcon({
                           html: `
-                            <div style="position: relative; pointer-events: none;">
+                            <div style="position: relative; pointer-events: none; font-family: inherit;">
                               <svg style="position: absolute; left: 0; top: 0; overflow: visible;" width="1" height="1">
                                 <line x1="0" y1="0" x2="${labelOffsetX}" y2="${labelOffsetY}" 
-                                  stroke="#f97316" stroke-width="1.5" stroke-opacity="0.7"/>
+                                  stroke="#fff" stroke-width="3" stroke-opacity="0.9"/>
+                                <line x1="0" y1="0" x2="${labelOffsetX}" y2="${labelOffsetY}" 
+                                  stroke="#333" stroke-width="1.5" stroke-opacity="0.8"/>
                               </svg>
                               <div style="
                                 position: absolute;
                                 left: ${labelOffsetX}px;
-                                top: ${labelOffsetY - 8}px;
+                                top: ${labelOffsetY - 10}px;
                                 white-space: nowrap;
-                                font-size: 11px;
+                                font-family: inherit;
+                                font-size: 13px;
                                 font-weight: 600;
-                                color: #7c2d12;
+                                color: #1f2937;
                                 text-shadow: 
                                   -1px -1px 0 #fff,
                                   1px -1px 0 #fff,
@@ -822,10 +827,10 @@ export default function Map({
                                   0 1px 0 #fff,
                                   -1px 0 0 #fff,
                                   1px 0 0 #fff,
-                                  -2px 0 3px rgba(255,255,255,0.8),
-                                  2px 0 3px rgba(255,255,255,0.8),
-                                  0 -2px 3px rgba(255,255,255,0.8),
-                                  0 2px 3px rgba(255,255,255,0.8);
+                                  -2px 0 3px rgba(255,255,255,0.9),
+                                  2px 0 3px rgba(255,255,255,0.9),
+                                  0 -2px 3px rgba(255,255,255,0.9),
+                                  0 2px 3px rgba(255,255,255,0.9);
                               ">${labelText}</div>
                             </div>
                           `,
@@ -959,6 +964,12 @@ export default function Map({
               }
 
               // For sampling points, use circle markers
+              // Label text for prøvetakingspunkt - use navn
+              const prvLabelText = f.properties.navn || '';
+              const showPrvLabel = currentZoom >= 14 && prvLabelText;
+              const prvLabelOffsetX = 18;
+              const prvLabelOffsetY = -18;
+
               return (
                 <React.Fragment key={uniqueKey}>
                   {/* Glow effect for selected point */}
@@ -973,6 +984,51 @@ export default function Map({
                         opacity: 0.5,
                         fillOpacity: 0.2,
                       }}
+                    />
+                  )}
+                  {/* Label with connecting line for prøvetakingspunkt at zoom >= 14 */}
+                  {showPrvLabel && (
+                    <Marker
+                      position={latlng}
+                      icon={L.divIcon({
+                        html: `
+                          <div style="position: relative; pointer-events: none; font-family: inherit;">
+                            <svg style="position: absolute; left: 0; top: 0; overflow: visible;" width="1" height="1">
+                              <line x1="0" y1="0" x2="${prvLabelOffsetX}" y2="${prvLabelOffsetY}" 
+                                stroke="#fff" stroke-width="3" stroke-opacity="0.9"/>
+                              <line x1="0" y1="0" x2="${prvLabelOffsetX}" y2="${prvLabelOffsetY}" 
+                                stroke="#333" stroke-width="1.5" stroke-opacity="0.8"/>
+                            </svg>
+                            <div style="
+                              position: absolute;
+                              left: ${prvLabelOffsetX}px;
+                              top: ${prvLabelOffsetY - 10}px;
+                              white-space: nowrap;
+                              font-family: inherit;
+                              font-size: 13px;
+                              font-weight: 600;
+                              color: #1f2937;
+                              text-shadow: 
+                                -1px -1px 0 #fff,
+                                1px -1px 0 #fff,
+                                -1px 1px 0 #fff,
+                                1px 1px 0 #fff,
+                                0 -1px 0 #fff,
+                                0 1px 0 #fff,
+                                -1px 0 0 #fff,
+                                1px 0 0 #fff,
+                                -2px 0 3px rgba(255,255,255,0.9),
+                                2px 0 3px rgba(255,255,255,0.9),
+                                0 -2px 3px rgba(255,255,255,0.9),
+                                0 2px 3px rgba(255,255,255,0.9);
+                            ">${prvLabelText}</div>
+                          </div>
+                        `,
+                        className: 'prv-label',
+                        iconSize: [0, 0],
+                        iconAnchor: [0, 0],
+                      })}
+                      interactive={false}
                     />
                   )}
                   {/* Actual point */}
