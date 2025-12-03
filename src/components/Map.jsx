@@ -16,6 +16,101 @@ import {
   useMapEvents,
 } from 'react-leaflet';
 import L from 'leaflet';
+
+// Copy button component for coordinates
+function CopyButton({ text, label }) {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = async (e) => {
+    e.stopPropagation();
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1500);
+    } catch (err) {
+      console.error('Failed to copy:', err);
+    }
+  };
+
+  return (
+    <button
+      onClick={handleCopy}
+      className="p-1 hover:bg-gray-100 rounded transition-colors"
+      title={`Kopier ${label}`}
+    >
+      {copied ? (
+        <svg
+          className="w-3.5 h-3.5 text-green-500"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M5 13l4 4L19 7"
+          />
+        </svg>
+      ) : (
+        <svg
+          className="w-3.5 h-3.5 text-gray-400 hover:text-gray-600"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"
+          />
+        </svg>
+      )}
+    </button>
+  );
+}
+
+// Coordinate display component with copy buttons
+function CoordinateDisplay({ coordinates, utmX, utmY }) {
+  const wgs84Coords = `${coordinates[1].toFixed(
+    6
+  )}, ${coordinates[0].toFixed(6)}`;
+  const utmCoords =
+    utmX && utmY ? `${utmX.toFixed(2)}, ${utmY.toFixed(2)}` : null;
+
+  return (
+    <div className="mt-3 pt-2 border-t border-gray-200 space-y-2">
+      {/* WGS84 */}
+      <div className="flex items-start justify-between gap-2">
+        <div className="flex-1 min-w-0">
+          <div className="text-[10px] text-gray-500 font-medium">
+            WGS84 (GPS)
+          </div>
+          <div className="text-[11px] text-gray-600 font-mono">
+            {wgs84Coords}
+          </div>
+        </div>
+        <CopyButton text={wgs84Coords} label="WGS84" />
+      </div>
+
+      {/* UTM32N */}
+      {utmCoords && (
+        <div className="flex items-start justify-between gap-2">
+          <div className="flex-1 min-w-0">
+            <div className="text-[10px] text-gray-500 font-medium">
+              UTM Zone 32N (EUREF89)
+            </div>
+            <div className="text-[11px] text-gray-600 font-mono">
+              {utmCoords}
+            </div>
+          </div>
+          <CopyButton text={utmCoords} label="UTM32N" />
+        </div>
+      )}
+    </div>
+  );
+}
 // import MarkerClusterGroup from 'react-leaflet-cluster';
 
 function FlyTo({ coords, zoom = 16 }) {
@@ -389,9 +484,138 @@ export default function Map({
   const [isMeasuring, setIsMeasuring] = useState(false);
   const [measureKey, setMeasureKey] = useState(0);
   const [measurement, setMeasurement] = useState(null);
+  const [isToolboxOpen, setIsToolboxOpen] = useState(false);
+  const [isExportModalOpen, setIsExportModalOpen] = useState(false);
+  const [exportDataType, setExportDataType] = useState('prv_punkt');
+  const [exportFormat, setExportFormat] = useState('geojson');
 
   // Ref to hold the addMeasurePoint function from MeasureTool
   const addMeasurePointRef = useRef(null);
+
+  // Export data function
+  const handleExport = () => {
+    const data =
+      exportDataType === 'prv_punkt'
+        ? allLayers.prv_punkt
+        : allLayers.ult_punkt;
+
+    if (!data || data.length === 0) {
+      alert('Ingen data å eksportere');
+      return;
+    }
+
+    let content, filename, mimeType;
+
+    if (exportFormat === 'geojson') {
+      // Create GeoJSON FeatureCollection
+      const geojson = {
+        type: 'FeatureCollection',
+        name:
+          exportDataType === 'prv_punkt'
+            ? 'prøvetakingspunkter'
+            : 'overløpspunkter',
+        features: data.map((f) => ({
+          type: 'Feature',
+          properties: { ...f.properties },
+          geometry: f.geometry,
+        })),
+      };
+      content = JSON.stringify(geojson, null, 2);
+      filename = `${
+        exportDataType === 'prv_punkt'
+          ? 'provetakingspunkter'
+          : 'overlopspunkter'
+      }.geojson`;
+      mimeType = 'application/geo+json';
+    } else {
+      // Create CSV with semicolon delimiter (Excel-friendly for Norwegian locale)
+      const headers =
+        exportDataType === 'prv_punkt'
+          ? [
+              'fid',
+              'navn',
+              'vannlok-kode',
+              'PSID',
+              'vannprøve',
+              'sedimentprøve',
+              'Bløtbunnsfauna',
+              'DATEREG',
+              'utm_x',
+              'utm_y',
+              'lng',
+              'lat',
+            ]
+          : [
+              'fid',
+              'REF',
+              'STATION',
+              'PSID',
+              'DATEREG',
+              'utm_x',
+              'utm_y',
+              'lng',
+              'lat',
+            ];
+
+      const rows = data.map((f) => {
+        const p = f.properties;
+        const coords = f.geometry.coordinates;
+        if (exportDataType === 'prv_punkt') {
+          return [
+            p.fid || '',
+            `"${(p.navn || '').replace(/"/g, '""')}"`,
+            `"${(p['vannlok-kode'] || '')
+              .replace(/"/g, '""')
+              .trim()}"`,
+            p.PSID || '',
+            p.vannprøve ? 'Ja' : 'Nei',
+            p.sedimentprøve ? 'Ja' : 'Nei',
+            p.Bløtbunnsfauna ? 'Ja' : 'Nei',
+            p.DATEREG || '',
+            p.utm_x || '',
+            p.utm_y || '',
+            coords[0],
+            coords[1],
+          ].join(';');
+        } else {
+          return [
+            p.fid || '',
+            `"${(p.REF || '').replace(/"/g, '""')}"`,
+            `"${(p.STATION || '').replace(/"/g, '""')}"`,
+            p.PSID || '',
+            p.DATEREG || '',
+            p.utm_x || '',
+            p.utm_y || '',
+            coords[0],
+            coords[1],
+          ].join(';');
+        }
+      });
+
+      // Add UTF-8 BOM for proper Norwegian character support in Excel
+      const BOM = '\uFEFF';
+      content = BOM + [headers.join(';'), ...rows].join('\n');
+      filename = `${
+        exportDataType === 'prv_punkt'
+          ? 'provetakingspunkter'
+          : 'overlopspunkter'
+      }.csv`;
+      mimeType = 'text/csv;charset=utf-8';
+    }
+
+    // Download file
+    const blob = new Blob([content], { type: mimeType });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+
+    setIsExportModalOpen(false);
+  };
 
   // Toggle measure mode
   const toggleMeasure = () => {
@@ -496,62 +720,113 @@ export default function Map({
         </select>
       </div>
 
-      {/* Verktøy (Tools) menu */}
+      {/* Verktøy (Tools) menu - collapsible toolbox */}
       <div className="absolute bottom-8 left-4 z-1000 flex flex-col gap-2">
         <div className="bg-white rounded-lg shadow-lg border border-gray-200 overflow-hidden">
-          <div
-            className="text-xs font-semibold px-3 py-2 border-b border-gray-200 flex items-center gap-2"
-            style={{ color: '#656263' }}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-4 w-4"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
-              />
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-              />
-            </svg>
-            Verktøy
-          </div>
+          {/* Toolbox toggle button */}
           <button
-            onClick={toggleMeasure}
-            className={`w-full px-3 py-2 text-left text-xs flex items-center gap-2 transition-colors ${
-              isMeasuring ? 'text-white' : 'hover:bg-gray-50'
+            onClick={() => setIsToolboxOpen(!isToolboxOpen)}
+            className={`flex items-center gap-2 px-3 py-2 transition-colors ${
+              isToolboxOpen || isMeasuring ? '' : 'hover:bg-gray-50'
             }`}
-            style={
-              isMeasuring
-                ? { backgroundColor: '#4782cb', color: 'white' }
-                : { color: '#656263' }
-            }
+            style={{
+              color: isMeasuring ? '#4782cb' : '#656263',
+              backgroundColor: isToolboxOpen
+                ? '#f9fafb'
+                : 'transparent',
+            }}
+            title="Verktøy"
           >
+            {/* Toolbox icon */}
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-4 w-4"
+              className="h-5 w-5"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
-              strokeWidth={2}
+              strokeWidth={1.5}
             >
-              {/* Ruler/measure icon */}
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                d="M3 6h18M3 6v12a2 2 0 002 2h14a2 2 0 002-2V6M3 6l3 0m0 0v4m0-4l3 0m0 0v2m0-2l3 0m0 0v4m0-4l3 0m0 0v2m0-2l3 0m0 0v4"
+                d="M11.42 15.17L17.25 21A2.652 2.652 0 0021 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 11-3.586-3.586l6.837-5.63m5.108-.233c.55-.164 1.163-.188 1.743-.14a4.5 4.5 0 004.486-6.336l-3.276 3.277a3.004 3.004 0 01-2.25-2.25l3.276-3.276a4.5 4.5 0 00-6.336 4.486c.091 1.076-.071 2.264-.904 2.95l-.102.085m-1.745 1.437L5.909 7.5H4.5L2.25 3.75l1.5-1.5L7.5 4.5v1.409l4.26 4.26m-1.745 1.437l1.745-1.437m6.615 8.206L15.75 15.75M4.867 19.125h.008v.008h-.008v-.008z"
               />
             </svg>
-            {isMeasuring ? 'Avslutt måling' : 'Mål avstand'}
+            {isToolboxOpen && (
+              <span className="text-xs font-semibold">Verktøy</span>
+            )}
+            {isToolboxOpen && (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-3 w-3 ml-auto"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={2}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M19 9l-7 7-7-7"
+                />
+              </svg>
+            )}
           </button>
+
+          {/* Expanded tools panel */}
+          {isToolboxOpen && (
+            <div className="border-t border-gray-200">
+              <button
+                onClick={toggleMeasure}
+                className={`w-full px-3 py-2 text-left text-xs flex items-center gap-2 transition-colors ${
+                  isMeasuring ? 'text-white' : 'hover:bg-gray-50'
+                }`}
+                style={
+                  isMeasuring
+                    ? { backgroundColor: '#4782cb', color: 'white' }
+                    : { color: '#656263' }
+                }
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-4 w-4"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                >
+                  {/* Ruler/measure icon */}
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M3 6h18M3 6v12a2 2 0 002 2h14a2 2 0 002-2V6M3 6l3 0m0 0v4m0-4l3 0m0 0v2m0-2l3 0m0 0v4m0-4l3 0m0 0v2m0-2l3 0m0 0v4"
+                  />
+                </svg>
+                {isMeasuring ? 'Avslutt måling' : 'Mål avstand'}
+              </button>
+              <button
+                onClick={() => setIsExportModalOpen(true)}
+                className="w-full px-3 py-2 text-left text-xs flex items-center gap-2 transition-colors hover:bg-gray-50"
+                style={{ color: '#656263' }}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-4 w-4"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+                  />
+                </svg>
+                Eksporter data
+              </button>
+            </div>
+          )}
         </div>
 
         {/* Measurement result display */}
@@ -768,7 +1043,7 @@ export default function Map({
                               </tr>
                             </tbody>
                           </table>
-                          <div className="mt-2 pt-2 border-t border-gray-200 text-[10px] text-gray-400">
+                          <div className="mt-2 pt-2 border-t border-gray-200 text-[10px] text-blue-500">
                             Overløpsledning
                           </div>
                         </div>
@@ -1010,42 +1285,12 @@ export default function Map({
                                 )}
                               </tbody>
                             </table>
-                            {(f.properties.utm_x ||
-                              f.geometry.coordinates) && (
-                              <div className="mt-2 pt-2 border-t border-gray-200">
-                                <div className="text-[10px] text-gray-500 font-medium mb-1">
-                                  Koordinater
-                                </div>
-                                <div className="grid grid-cols-[auto_1fr] gap-x-2 text-[10px] text-gray-500 font-mono">
-                                  <span>WGS84:</span>
-                                  <span>
-                                    {f.geometry.coordinates[1].toFixed(
-                                      6
-                                    )}
-                                    ,{' '}
-                                    {f.geometry.coordinates[0].toFixed(
-                                      6
-                                    )}
-                                  </span>
-                                  {f.properties.utm_x &&
-                                    f.properties.utm_y && (
-                                      <>
-                                        <span>UTM32N:</span>
-                                        <span>
-                                          {f.properties.utm_x.toFixed(
-                                            2
-                                          )}
-                                          ,{' '}
-                                          {f.properties.utm_y.toFixed(
-                                            2
-                                          )}
-                                        </span>
-                                      </>
-                                    )}
-                                </div>
-                              </div>
-                            )}
-                            <div className="mt-2 pt-2 border-t border-gray-200 text-[10px] text-gray-400">
+                            <CoordinateDisplay
+                              coordinates={f.geometry.coordinates}
+                              utmX={f.properties.utm_x}
+                              utmY={f.properties.utm_y}
+                            />
+                            <div className="mt-2 pt-2 border-t border-gray-200 text-[10px] text-blue-500">
                               Overløpspunkt
                             </div>
                           </div>
@@ -1184,7 +1429,7 @@ export default function Map({
                               {f.properties['vannlok-kode'] && (
                                 <tr>
                                   <td className="py-0.5 pr-3 font-medium">
-                                    Vannlok
+                                    Vannlokalitetkode
                                   </td>
                                   <td className="py-0.5">
                                     {f.properties[
@@ -1235,30 +1480,12 @@ export default function Map({
                               )}
                             </tbody>
                           </table>
-                          <div className="mt-2 pt-2 border-t border-gray-200">
-                            <div className="text-[10px] text-gray-500 font-medium mb-1">
-                              Koordinater
-                            </div>
-                            <div className="grid grid-cols-[auto_1fr] gap-x-2 text-[10px] text-gray-500 font-mono">
-                              <span>WGS84:</span>
-                              <span>
-                                {f.geometry.coordinates[1].toFixed(6)}
-                                ,{' '}
-                                {f.geometry.coordinates[0].toFixed(6)}
-                              </span>
-                              {f.properties.utm_x &&
-                                f.properties.utm_y && (
-                                  <>
-                                    <span>UTM32N:</span>
-                                    <span>
-                                      {f.properties.utm_x.toFixed(2)},{' '}
-                                      {f.properties.utm_y.toFixed(2)}
-                                    </span>
-                                  </>
-                                )}
-                            </div>
-                          </div>
-                          <div className="mt-2 pt-2 border-t border-gray-200 text-[10px] text-gray-400">
+                          <CoordinateDisplay
+                            coordinates={f.geometry.coordinates}
+                            utmX={f.properties.utm_x}
+                            utmY={f.properties.utm_y}
+                          />
+                          <div className="mt-2 pt-2 border-t border-gray-200 text-[10px] text-blue-500">
                             Prøvetakingspunkt
                           </div>
                         </div>
@@ -1298,6 +1525,149 @@ export default function Map({
           />
         )}
       </MapContainer>
+
+      {/* Export Modal */}
+      {isExportModalOpen && (
+        <div className="fixed inset-0 z-2000 flex items-center justify-center bg-black/50">
+          <div className="bg-white rounded-lg shadow-xl w-80 max-w-[90vw]">
+            {/* Modal Header */}
+            <div className="flex items-center justify-between px-4 py-3 border-b border-gray-200">
+              <h3
+                className="text-sm font-semibold"
+                style={{ color: '#656263' }}
+              >
+                Eksporter data
+              </h3>
+              <button
+                onClick={() => setIsExportModalOpen(false)}
+                className="p-1 hover:bg-gray-100 rounded transition-colors"
+              >
+                <svg
+                  className="w-4 h-4 text-gray-500"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
+            </div>
+
+            {/* Modal Body */}
+            <div className="p-4 space-y-4">
+              {/* Data type selection */}
+              <div>
+                <label className="block text-xs font-medium text-gray-600 mb-2">
+                  Velg datatype
+                </label>
+                <div className="space-y-2">
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input
+                      type="radio"
+                      name="dataType"
+                      value="prv_punkt"
+                      checked={exportDataType === 'prv_punkt'}
+                      onChange={(e) =>
+                        setExportDataType(e.target.value)
+                      }
+                      className="w-4 h-4 text-blue-500"
+                    />
+                    <span className="text-sm text-gray-700">
+                      Prøvetakingspunkter
+                    </span>
+                    <span className="text-xs text-gray-400">
+                      ({allLayers.prv_punkt?.length || 0})
+                    </span>
+                  </label>
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input
+                      type="radio"
+                      name="dataType"
+                      value="ult_punkt"
+                      checked={exportDataType === 'ult_punkt'}
+                      onChange={(e) =>
+                        setExportDataType(e.target.value)
+                      }
+                      className="w-4 h-4 text-blue-500"
+                    />
+                    <span className="text-sm text-gray-700">
+                      Overløpspunkter
+                    </span>
+                    <span className="text-xs text-gray-400">
+                      ({allLayers.ult_punkt?.length || 0})
+                    </span>
+                  </label>
+                </div>
+              </div>
+
+              {/* Format selection */}
+              <div>
+                <label className="block text-xs font-medium text-gray-600 mb-2">
+                  Velg format
+                </label>
+                <div className="space-y-2">
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input
+                      type="radio"
+                      name="format"
+                      value="geojson"
+                      checked={exportFormat === 'geojson'}
+                      onChange={(e) =>
+                        setExportFormat(e.target.value)
+                      }
+                      className="w-4 h-4 text-blue-500"
+                    />
+                    <span className="text-sm text-gray-700">
+                      GeoJSON
+                    </span>
+                    <span className="text-xs text-gray-400">
+                      (.geojson)
+                    </span>
+                  </label>
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input
+                      type="radio"
+                      name="format"
+                      value="csv"
+                      checked={exportFormat === 'csv'}
+                      onChange={(e) =>
+                        setExportFormat(e.target.value)
+                      }
+                      className="w-4 h-4 text-blue-500"
+                    />
+                    <span className="text-sm text-gray-700">CSV</span>
+                    <span className="text-xs text-gray-400">
+                      (.csv)
+                    </span>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            {/* Modal Footer */}
+            <div className="flex justify-end gap-2 px-4 py-3 border-t border-gray-200 bg-gray-50 rounded-b-lg">
+              <button
+                onClick={() => setIsExportModalOpen(false)}
+                className="px-3 py-1.5 text-xs font-medium text-gray-600 hover:bg-gray-200 rounded transition-colors"
+              >
+                Avbryt
+              </button>
+              <button
+                onClick={handleExport}
+                className="px-3 py-1.5 text-xs font-medium text-white rounded transition-colors"
+                style={{ backgroundColor: '#4782cb' }}
+              >
+                Last ned
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
