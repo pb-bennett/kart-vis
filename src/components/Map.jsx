@@ -712,9 +712,11 @@ export default function Map({
           className="text-sm rounded px-2 py-1.5 bg-white cursor-pointer w-full border"
           style={{ borderColor: '#4782cb', color: '#656263' }}
         >
-          <option value="geonorge">Geonorge Topo (Farge)</option>
+          <option value="geonorge">
+            Topografisk Norgeskart farge
+          </option>
           <option value="geonorgeGraatone">
-            Geonorge Topo (Gråtone)
+            Topografisk Norgeskart gråtone
           </option>
           <option value="osm">OpenStreetMap</option>
         </select>
