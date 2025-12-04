@@ -252,8 +252,8 @@ export default function SidePanel({
       )}
       {/* Feature list */}
       <ul className="p-2 flex-1 overflow-y-auto">
-        {features.map((f) => {
-          const key = f.properties.fid;
+        {features.map((f, index) => {
+          const key = f.properties.fid ?? `feature-${index}`;
           let title, subtitle;
 
           if (activeLayer === 'utl_ledning') {
