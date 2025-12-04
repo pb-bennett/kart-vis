@@ -1,0 +1,2098 @@
+{
+  "type": "FeatureCollection",
+  "name": "ult_punkt",
+  "crs": {
+    "type": "name",
+    "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" }
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 1,
+        "PSID": 386,
+        "REF": "OS689",
+        "STATION": "Vollen",
+        "FCODE": "OVL",
+        "FUNC": "SK",
+        "YEAR": 1994,
+        "Z": 5.9,
+        "LOCATION": "P",
+        "DATEREG": "1994-11-14",
+        "DATECHANGE": "2023-09-15",
+        "COVER_Z": 5.9,
+        "MPNT_GUID": "9F1BF7EF-9E7F-4451-AC72-4106F5839AC1",
+        "utm_x": 581268.12,
+        "utm_y": 6564711.77
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.423429723148004, 59.21366798688279]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 2,
+        "PSID": 487,
+        "REF": "OS101",
+        "STATION": "Langvika",
+        "FCODE": "OVL",
+        "FUNC": "SK",
+        "YEAR": 0,
+        "Z": 0.82,
+        "LOCATION": "P",
+        "DATEREG": "1995-06-14",
+        "DATECHANGE": "2023-09-15",
+        "COVER_Z": 0.85,
+        "MPNT_GUID": "28BD1CC6-AA6B-4041-9AF3-47B75404B79C",
+        "utm_x": 579176.77,
+        "utm_y": 6554354.55
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.383052238261516, 59.121078709736899]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 3,
+        "PSID": 549,
+        "REF": "OS118",
+        "STATION": "Haug gamle",
+        "FCODE": "OVL",
+        "FUNC": "SK",
+        "YEAR": 2020,
+        "Z": 31.3,
+        "LOCATION": "A",
+        "DATEREG": "1995-06-20",
+        "DATECHANGE": "2022-11-23",
+        "COVER_Z": 31.3,
+        "MPNT_GUID": "2202B9CC-A000-494A-9021-7702B48CF9BA",
+        "utm_x": 580048.87,
+        "utm_y": 6554222.14
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.398232337335562, 59.119726827039443]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 4,
+        "PSID": 565,
+        "REF": "OS671",
+        "STATION": "Gipø Buss",
+        "FCODE": "OVL",
+        "FUNC": "SK",
+        "YEAR": 0,
+        "Z": 3.65,
+        "LOCATION": "T",
+        "DATEREG": "1994-11-17",
+        "DATECHANGE": "2023-09-15",
+        "COVER_Z": 3.55,
+        "MPNT_GUID": "FDABA304-6A83-4D13-BD67-E19B016B27A0",
+        "utm_x": 580750.79,
+        "utm_y": 6565657.57
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.414723141042687, 59.222257832745257]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 5,
+        "PSID": 579,
+        "REF": null,
+        "STATION": null,
+        "FCODE": "OVL",
+        "FUNC": "--",
+        "YEAR": 0,
+        "Z": 9.92,
+        "LOCATION": "T",
+        "DATEREG": "1994-09-23",
+        "DATECHANGE": "2022-09-29",
+        "COVER_Z": 9.92,
+        "MPNT_GUID": "9813BAAA-E503-4E0B-95ED-CAFC52913B3F",
+        "utm_x": 579513.38,
+        "utm_y": 6553406.22
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.388585617906942, 59.112501997825476]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 7,
+        "PSID": 1288,
+        "REF": "OS746",
+        "STATION": "Sundby-kummen",
+        "FCODE": "OVL",
+        "FUNC": "SK",
+        "YEAR": 1994,
+        "Z": 4.22,
+        "LOCATION": null,
+        "DATEREG": "1994-12-13",
+        "DATECHANGE": "2025-01-16",
+        "COVER_Z": 4.22,
+        "MPNT_GUID": "E0CBDF43-8FA1-4C0F-A146-C8C2A9A7FFA1",
+        "utm_x": 582090.52,
+        "utm_y": 6564742.83
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.437840743868072, 59.213788423223875]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 9,
+        "PSID": 1519,
+        "REF": "OS128",
+        "STATION": "Treidene",
+        "FCODE": "OVL",
+        "FUNC": "SK",
+        "YEAR": 1999,
+        "Z": 1.54,
+        "LOCATION": "G",
+        "DATEREG": "2004-06-08",
+        "DATECHANGE": "2025-02-18",
+        "COVER_Z": 1.54,
+        "MPNT_GUID": "CAF9ECE9-8388-43F2-BE2C-16FB5707B318",
+        "utm_x": 580199.1,
+        "utm_y": 6549692.93
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.399198020990172, 59.079036092327627]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 10,
+        "PSID": 1560,
+        "REF": "OS102",
+        "STATION": "Budalstrand",
+        "FCODE": "OVL",
+        "FUNC": "SK",
+        "YEAR": 2003,
+        "Z": 0.0,
+        "LOCATION": "G",
+        "DATEREG": "2004-10-19",
+        "DATECHANGE": "2025-02-18",
+        "COVER_Z": 1.91,
+        "MPNT_GUID": "9F65EDAB-FB73-4264-BC08-4F9AFB0C2EE2",
+        "utm_x": 579179.64,
+        "utm_y": 6554913.88
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.383304781578783, 59.126099759567403]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 11,
+        "PSID": 1652,
+        "REF": "OS121",
+        "STATION": "Ormelet",
+        "FCODE": "OVL",
+        "FUNC": "SK",
+        "YEAR": 1997,
+        "Z": 0.0,
+        "LOCATION": "P",
+        "DATEREG": "2004-11-16",
+        "DATECHANGE": "2023-09-15",
+        "COVER_Z": 0.0,
+        "MPNT_GUID": "16CBB835-2DF6-4051-9FD3-C8AA4C8A5A11",
+        "utm_x": 581156.44,
+        "utm_y": 6552867.89
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.41706970992665, 59.107358982258489]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 12,
+        "PSID": 1748,
+        "REF": "OS123",
+        "STATION": "Hvasser skole",
+        "FCODE": "OVL",
+        "FUNC": "SK",
+        "YEAR": 2002,
+        "Z": 2.65,
+        "LOCATION": "P",
+        "DATEREG": "2005-09-30",
+        "DATECHANGE": "2023-09-15",
+        "COVER_Z": 2.65,
+        "MPNT_GUID": "83D9DD66-C4F7-4486-9A2E-9E2827E12B32",
+        "utm_x": 582564.39,
+        "utm_y": 6549439.51
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.440353970960953, 59.076309442895877]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 13,
+        "PSID": 1848,
+        "REF": "OS104",
+        "STATION": "Svelvikstranda",
+        "FCODE": "OVL",
+        "FUNC": "SK",
+        "YEAR": 0,
+        "Z": 0.0,
+        "LOCATION": null,
+        "DATEREG": "2008-02-18",
+        "DATECHANGE": "2023-09-15",
+        "COVER_Z": 3.92,
+        "MPNT_GUID": "020B6778-3600-479B-93CA-058D96B44D42",
+        "utm_x": 578996.21,
+        "utm_y": 6555874.35
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.380448215140243, 59.134756814059322]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 14,
+        "PSID": 2027,
+        "REF": "OS117",
+        "STATION": "Haug Rimi",
+        "FCODE": "OVL",
+        "FUNC": "SK",
+        "YEAR": 2008,
+        "Z": 0.0,
+        "LOCATION": null,
+        "DATEREG": "2008-09-19",
+        "DATECHANGE": "2023-09-15",
+        "COVER_Z": 31.84,
+        "MPNT_GUID": "9FFE788C-C953-46EA-AD3A-3B025431619E",
+        "utm_x": 580042.46,
+        "utm_y": 6554351.92
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.398167880770748, 59.120893171791074]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 15,
+        "PSID": 2090,
+        "REF": "OS110",
+        "STATION": "Vindåsen",
+        "FCODE": "OVL",
+        "FUNC": "SK",
+        "YEAR": 0,
+        "Z": 0.0,
+        "LOCATION": null,
+        "DATEREG": "2008-09-23",
+        "DATECHANGE": "2025-02-18",
+        "COVER_Z": 4.77,
+        "MPNT_GUID": "55536744-7BBA-4596-ABA5-E10D71812767",
+        "utm_x": 580262.3,
+        "utm_y": 6559414.25
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.403866391092009, 59.166300114898462]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 16,
+        "PSID": 2415,
+        "REF": "OS707",
+        "STATION": "Årøysund",
+        "FCODE": "OVL",
+        "FUNC": "SO",
+        "YEAR": 0,
+        "Z": 0.0,
+        "LOCATION": null,
+        "DATEREG": "1995-01-17",
+        "DATECHANGE": "2023-09-15",
+        "COVER_Z": 0.0,
+        "MPNT_GUID": "8866E1F5-D4DF-4345-8AA3-ABA6EF081865",
+        "utm_x": 583391.0,
+        "utm_y": 6561283.17
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.459285098719866, 59.182475742257012]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 17,
+        "PSID": 2781,
+        "REF": "OS115",
+        "STATION": "Grimestad nedre",
+        "FCODE": "OVL",
+        "FUNC": "SK",
+        "YEAR": 2013,
+        "Z": 1.92,
+        "LOCATION": null,
+        "DATEREG": "2013-06-20",
+        "DATECHANGE": "2023-09-15",
+        "COVER_Z": 1.94,
+        "MPNT_GUID": "03ADDC92-536A-47EA-83B1-D36BDBDC33FE",
+        "utm_x": 580792.4,
+        "utm_y": 6556209.47
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.411949340690912, 59.137428073047424]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 18,
+        "PSID": 2844,
+        "REF": "OS130",
+        "STATION": "Lindhøy",
+        "FCODE": "OVL",
+        "FUNC": "SK",
+        "YEAR": 2013,
+        "Z": 10.83,
+        "LOCATION": null,
+        "DATEREG": "2013-10-07",
+        "DATECHANGE": "2023-09-15",
+        "COVER_Z": 10.83,
+        "MPNT_GUID": "25F11C04-9F9E-4381-8B5F-715F4759E659",
+        "utm_x": 580351.66,
+        "utm_y": 6552848.02
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.40301508796307, 59.107333208687031]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 19,
+        "PSID": 2880,
+        "REF": "OS127",
+        "STATION": "Skåeveien",
+        "FCODE": "OVL",
+        "FUNC": "SK",
+        "YEAR": 2012,
+        "Z": 5.01,
+        "LOCATION": null,
+        "DATEREG": "2014-02-24",
+        "DATECHANGE": "2025-02-18",
+        "COVER_Z": 5.02,
+        "MPNT_GUID": "90E5F392-66D1-47F6-BB1E-6598832D94E9",
+        "utm_x": 580360.47,
+        "utm_y": 6547764.68
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.4013067211869, 59.061694147735999]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 20,
+        "PSID": 2897,
+        "REF": "OS126",
+        "STATION": "Grepan",
+        "FCODE": "OVL",
+        "FUNC": "SK",
+        "YEAR": 2013,
+        "Z": 4.09,
+        "LOCATION": null,
+        "DATEREG": "2014-03-03",
+        "DATECHANGE": "2025-02-18",
+        "COVER_Z": 4.09,
+        "MPNT_GUID": "C3A60E06-51E0-4C5A-BC40-DDB7BDC3E5F0",
+        "utm_x": 581064.74,
+        "utm_y": 6548000.41
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.413670285753414, 59.063677244271005]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 21,
+        "PSID": 3028,
+        "REF": "OS119",
+        "STATION": "Hulebakk",
+        "FCODE": "OVL",
+        "FUNC": "SK",
+        "YEAR": 2014,
+        "Z": 1.83,
+        "LOCATION": null,
+        "DATEREG": "2014-12-17",
+        "DATECHANGE": "2023-09-15",
+        "COVER_Z": 1.83,
+        "MPNT_GUID": "3FDFE727-840B-47CF-8EC3-8807C76BEFFF",
+        "utm_x": 580920.71,
+        "utm_y": 6554797.15
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.413668289965468, 59.124724257467363]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 22,
+        "PSID": 3474,
+        "REF": "OS133",
+        "STATION": "Midtgården",
+        "FCODE": "OVL",
+        "FUNC": "SK",
+        "YEAR": 2017,
+        "Z": 11.24,
+        "LOCATION": null,
+        "DATEREG": "2017-10-18",
+        "DATECHANGE": "2025-02-18",
+        "COVER_Z": 11.24,
+        "MPNT_GUID": "B5B36F60-5EC0-41FD-88C1-85AFC1EFA4C7",
+        "utm_x": 580391.28,
+        "utm_y": 6548637.7
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.402163307473034, 59.069526198018941]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 23,
+        "PSID": 4098,
+        "REF": "OS640",
+        "STATION": "Arås",
+        "FCODE": "OVL",
+        "FUNC": "SK",
+        "YEAR": 0,
+        "Z": 1.29,
+        "LOCATION": null,
+        "DATEREG": "1995-02-22",
+        "DATECHANGE": "2023-09-15",
+        "COVER_Z": 1.29,
+        "MPNT_GUID": "2E01487C-7288-4638-A45F-30F083F561B3",
+        "utm_x": 583039.01,
+        "utm_y": 6562987.29
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.453777582210142, 59.197843450158139]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 25,
+        "PSID": 7724,
+        "REF": "OS730",
+        "STATION": "Hjemseng",
+        "FCODE": "OVL",
+        "FUNC": "SK",
+        "YEAR": 0,
+        "Z": 1.69,
+        "LOCATION": "T",
+        "DATEREG": "1995-04-21",
+        "DATECHANGE": "2023-09-15",
+        "COVER_Z": 1.79,
+        "MPNT_GUID": "105C57E1-E7C8-444E-856B-40E7E5B1062E",
+        "utm_x": 582333.38,
+        "utm_y": 6565645.2
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.442434743794275, 59.221842362635599]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 26,
+        "PSID": 7780,
+        "REF": "OS626",
+        "STATION": "Neslund",
+        "FCODE": "OVL",
+        "FUNC": "SAO",
+        "YEAR": 1994,
+        "Z": 1.13,
+        "LOCATION": "T",
+        "DATEREG": "1995-04-21",
+        "DATECHANGE": "2023-09-15",
+        "COVER_Z": 1.13,
+        "MPNT_GUID": "FADC3F25-B38C-4D16-B265-87907F285E2E",
+        "utm_x": 582850.1,
+        "utm_y": 6565825.19
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.451552658072893, 59.223357542755011]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 27,
+        "PSID": 9575,
+        "REF": "OS714",
+        "STATION": "FOSSÅSVEIEN",
+        "FCODE": "OVL",
+        "FUNC": "SK",
+        "YEAR": 0,
+        "Z": 9.8,
+        "LOCATION": null,
+        "DATEREG": "1995-06-23",
+        "DATECHANGE": "2022-06-09",
+        "COVER_Z": 9.78,
+        "MPNT_GUID": "549E2455-B8AC-4B45-BED5-5A4265CFEF1A",
+        "utm_x": 582576.18,
+        "utm_y": 6566732.12
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.447100054957561, 59.231552923176196]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 28,
+        "PSID": 10233,
+        "REF": "OS716",
+        "STATION": "Kalvetangen",
+        "FCODE": "OVL",
+        "FUNC": "SK",
+        "YEAR": 0,
+        "Z": 2.25,
+        "LOCATION": null,
+        "DATEREG": "1995-07-27",
+        "DATECHANGE": "2023-09-15",
+        "COVER_Z": 2.25,
+        "MPNT_GUID": "ECA1A52B-2265-419B-ABDB-353EBB1EF4B5",
+        "utm_x": 582492.64,
+        "utm_y": 6568136.25
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.446170214870431, 59.24417470587202]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 29,
+        "PSID": 10522,
+        "REF": "OS715",
+        "STATION": "Berglyveien",
+        "FCODE": "OVL",
+        "FUNC": "SK",
+        "YEAR": 0,
+        "Z": 0.93,
+        "LOCATION": null,
+        "DATEREG": "1995-08-15",
+        "DATECHANGE": "2023-09-15",
+        "COVER_Z": 0.93,
+        "MPNT_GUID": "BB89FB72-E1B7-410C-B0A6-AC780FDB3857",
+        "utm_x": 582065.46,
+        "utm_y": 6567433.45
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.438418348384012, 59.237948319388067]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 33,
+        "PSID": 14928,
+        "REF": "OS734",
+        "STATION": "Kjernåsveien",
+        "FCODE": "OVL",
+        "FUNC": "SA",
+        "YEAR": 0,
+        "Z": 24.76,
+        "LOCATION": "G",
+        "DATEREG": "1995-11-28",
+        "DATECHANGE": "2023-09-15",
+        "COVER_Z": 24.76,
+        "MPNT_GUID": "483A0D24-CD14-48AB-BD2B-5A7AECBE060D",
+        "utm_x": 580003.39,
+        "utm_y": 6567817.9
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.402429439398071, 59.241794194876313]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 36,
+        "PSID": 19070,
+        "REF": "OS661",
+        "STATION": "Amundrødveien",
+        "FCODE": "OVL",
+        "FUNC": "AK",
+        "YEAR": 0,
+        "Z": 16.04,
+        "LOCATION": "G",
+        "DATEREG": "1997-07-07",
+        "DATECHANGE": "2023-09-15",
+        "COVER_Z": 16.04,
+        "MPNT_GUID": "E58E26FE-E1B6-470D-9329-A284C29BCBD9",
+        "utm_x": 579094.75,
+        "utm_y": 6568335.72
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.386695523243395, 59.246613657137296]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 39,
+        "PSID": 22452,
+        "REF": "OS601",
+        "STATION": "ØRSNES",
+        "FCODE": "OVL",
+        "FUNC": "SA",
+        "YEAR": 0,
+        "Z": 2.09,
+        "LOCATION": "G",
+        "DATEREG": "1997-07-07",
+        "DATECHANGE": "2021-01-06",
+        "COVER_Z": 2.09,
+        "MPNT_GUID": "C468D7B4-2546-46B1-8DAC-77CB2EB055A3",
+        "utm_x": 581031.06,
+        "utm_y": 6569610.12
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.421107305057758, 59.25768856994307]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 41,
+        "PSID": 22777,
+        "REF": "OS667",
+        "STATION": "Ramdal",
+        "FCODE": "OVL",
+        "FUNC": "SA",
+        "YEAR": 0,
+        "Z": 4.82,
+        "LOCATION": "T",
+        "DATEREG": "1997-07-07",
+        "DATECHANGE": "2025-09-29",
+        "COVER_Z": 4.87,
+        "MPNT_GUID": "341F105A-0E87-4197-950B-5743E237286B",
+        "utm_x": 579416.3,
+        "utm_y": 6570319.4
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.393057664165417, 59.264362237999862]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 43,
+        "PSID": 23690,
+        "REF": "OS745",
+        "STATION": "Ulvåsveien",
+        "FCODE": "OVL",
+        "FUNC": "SK",
+        "YEAR": 1996,
+        "Z": 1.44,
+        "LOCATION": "T",
+        "DATEREG": "1996-09-18",
+        "DATECHANGE": "2023-09-15",
+        "COVER_Z": 1.44,
+        "MPNT_GUID": "83C70EBB-F1B7-4C76-B9C8-414425D03382",
+        "utm_x": 582845.78,
+        "utm_y": 6563322.45
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.450523507265132, 59.200890116094435]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 44,
+        "PSID": 23878,
+        "REF": "OS702",
+        "STATION": "Duken syd",
+        "FCODE": "OVL",
+        "FUNC": "SK",
+        "YEAR": 1993,
+        "Z": 1.42,
+        "LOCATION": "T",
+        "DATEREG": "1996-12-20",
+        "DATECHANGE": "2022-06-29",
+        "COVER_Z": 1.4,
+        "MPNT_GUID": "0F42AEB0-9449-4B24-9B30-33C1F6819F69",
+        "utm_x": 583129.03,
+        "utm_y": 6564570.4
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.455957882223384, 59.21203813149824]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 45,
+        "PSID": 23893,
+        "REF": "OS701",
+        "STATION": "Duken nord",
+        "FCODE": "OVL",
+        "FUNC": "SK",
+        "YEAR": 1993,
+        "Z": 1.62,
+        "LOCATION": "T",
+        "DATEREG": "1996-12-20",
+        "DATECHANGE": "2022-06-22",
+        "COVER_Z": 1.45,
+        "MPNT_GUID": "32490F0B-4E12-4BCD-A27E-8A832D137501",
+        "utm_x": 583225.57,
+        "utm_y": 6565111.74
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.457855309611448, 59.216879043580995]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 46,
+        "PSID": 24193,
+        "REF": "OS703",
+        "STATION": "Neslund",
+        "FCODE": "OVL",
+        "FUNC": "SK",
+        "YEAR": 1994,
+        "Z": 0.95,
+        "LOCATION": "P",
+        "DATEREG": "1997-02-14",
+        "DATECHANGE": "2022-06-23",
+        "COVER_Z": 1.05,
+        "MPNT_GUID": "F4FE56E5-260B-4FD7-AEAF-B4113B4B1E09",
+        "utm_x": 582880.01,
+        "utm_y": 6565827.9
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.452077526762396, 59.223376024692051]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 47,
+        "PSID": 24593,
+        "REF": "OS688",
+        "STATION": "Kjernåsveien",
+        "FCODE": "OVL",
+        "FUNC": "SA",
+        "YEAR": 1994,
+        "Z": 24.7,
+        "LOCATION": "P",
+        "DATEREG": "1997-09-11",
+        "DATECHANGE": "2023-09-15",
+        "COVER_Z": 24.7,
+        "MPNT_GUID": "4C74CAB3-FBDB-4260-AEB7-5F460665C21C",
+        "utm_x": 580015.99,
+        "utm_y": 6567813.26
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.402648525098789, 59.241750158758599]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 48,
+        "PSID": 24809,
+        "REF": "OS686",
+        "STATION": "Danholmen",
+        "FCODE": "OVL",
+        "FUNC": "SK",
+        "YEAR": 1991,
+        "Z": 1.72,
+        "LOCATION": "T",
+        "DATEREG": "1997-12-03",
+        "DATECHANGE": "2023-09-15",
+        "COVER_Z": 1.72,
+        "MPNT_GUID": "FB7AAA68-A940-46CD-8B74-8624DCE22047",
+        "utm_x": 579132.28,
+        "utm_y": 6570504.45
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.38814489649182, 59.266076752327535]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 49,
+        "PSID": 26084,
+        "REF": "OS729",
+        "STATION": "Stangeby",
+        "FCODE": "OVL",
+        "FUNC": "SK",
+        "YEAR": 1997,
+        "Z": 6.18,
+        "LOCATION": "T",
+        "DATEREG": "1998-10-08",
+        "DATECHANGE": "2023-09-15",
+        "COVER_Z": 6.18,
+        "MPNT_GUID": "66C6DC6D-BCE0-4D1C-A720-844CF108F7BA",
+        "utm_x": 580529.9,
+        "utm_y": 6565098.88
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.41064758476911, 59.217284148135889]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 50,
+        "PSID": 26294,
+        "REF": "OS606",
+        "STATION": "Skjæret",
+        "FCODE": "OVL",
+        "FUNC": "SA",
+        "YEAR": 1998,
+        "Z": 6.06,
+        "LOCATION": "T",
+        "DATEREG": "1998-12-15",
+        "DATECHANGE": "2023-09-15",
+        "COVER_Z": 6.06,
+        "MPNT_GUID": "0436332D-839B-4EEB-9B2D-358A29D488FA",
+        "utm_x": 581297.84,
+        "utm_y": 6567874.14
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.425133659913534, 59.242052629117254]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 51,
+        "PSID": 27255,
+        "REF": "OS709",
+        "STATION": "Rektorveien",
+        "FCODE": "OVL",
+        "FUNC": "SK",
+        "YEAR": 0,
+        "Z": 0.0,
+        "LOCATION": null,
+        "DATEREG": "2000-09-27",
+        "DATECHANGE": "2023-09-15",
+        "COVER_Z": 0.0,
+        "MPNT_GUID": "FF3C1A5C-366C-4E7E-B172-CAAE96460239",
+        "utm_x": 580202.96,
+        "utm_y": 6565785.94
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.405176105860505, 59.223514293581005]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 52,
+        "PSID": 27356,
+        "REF": "OS663",
+        "STATION": "Munkerekka båt",
+        "FCODE": "OVL",
+        "FUNC": "SK",
+        "YEAR": 2018,
+        "Z": 1.7,
+        "LOCATION": "G",
+        "DATEREG": "2000-12-15",
+        "DATECHANGE": "2023-09-15",
+        "COVER_Z": 1.7,
+        "MPNT_GUID": "405F3B47-9F78-4F31-88E3-AF66A4D95B64",
+        "utm_x": 579092.94,
+        "utm_y": 6568935.23
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.386882415869247, 59.251996196191328]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 55,
+        "PSID": 29109,
+        "REF": "OS732",
+        "STATION": "Tørkopp",
+        "FCODE": "OVL",
+        "FUNC": "SK",
+        "YEAR": 2020,
+        "Z": 6.03,
+        "LOCATION": "T",
+        "DATEREG": "2005-11-22",
+        "DATECHANGE": "2023-09-15",
+        "COVER_Z": 6.03,
+        "MPNT_GUID": "C88F3867-4C83-4F43-BB5E-8F872C995859",
+        "utm_x": 579029.7,
+        "utm_y": 6567348.73
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.385196000292572, 59.237764918738286]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 56,
+        "PSID": 29536,
+        "REF": "OS731",
+        "STATION": "GRENSEGATEN",
+        "FCODE": "OVL",
+        "FUNC": "VA",
+        "YEAR": 2005,
+        "Z": 4.24,
+        "LOCATION": "G",
+        "DATEREG": "2006-09-18",
+        "DATECHANGE": "2021-01-06",
+        "COVER_Z": 4.24,
+        "MPNT_GUID": "FC659B9C-BC34-4483-B7E5-9CE4B0A34F49",
+        "utm_x": 580967.78,
+        "utm_y": 6569522.89
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.419965326919606, 59.256917568381155]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 57,
+        "PSID": 29596,
+        "REF": "OS697",
+        "STATION": "Konvallveien",
+        "FCODE": "OVL",
+        "FUNC": "AK",
+        "YEAR": 1994,
+        "Z": 0.0,
+        "LOCATION": null,
+        "DATEREG": "2006-12-05",
+        "DATECHANGE": "2023-09-15",
+        "COVER_Z": 0.0,
+        "MPNT_GUID": "13DA68E2-9B55-4B1A-8A13-4949BCD6F89F",
+        "utm_x": 579220.76,
+        "utm_y": 6567400.43
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.388562541392004, 59.23819338042707]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 58,
+        "PSID": 29656,
+        "REF": "OS720",
+        "STATION": "Hella",
+        "FCODE": "OVL",
+        "FUNC": "SK",
+        "YEAR": 1993,
+        "Z": 3.8,
+        "LOCATION": "A",
+        "DATEREG": "2007-04-20",
+        "DATECHANGE": "2023-09-15",
+        "COVER_Z": 3.8,
+        "MPNT_GUID": "B5030ACC-5F06-4869-9B21-B992225F2FCC",
+        "utm_x": 579088.0,
+        "utm_y": 6566724.02
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.385989944452229, 59.232145586945016]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 59,
+        "PSID": 29791,
+        "REF": null,
+        "STATION": null,
+        "FCODE": "OVL",
+        "FUNC": "--",
+        "YEAR": 1986,
+        "Z": 4.92,
+        "LOCATION": null,
+        "DATEREG": "2008-02-28",
+        "DATECHANGE": "2022-12-13",
+        "COVER_Z": 4.92,
+        "MPNT_GUID": "A54800A8-1F15-431A-99A0-E3EFF6DD5E3A",
+        "utm_x": 580702.44,
+        "utm_y": 6566371.03
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.414141391836528, 59.228672195466707]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 60,
+        "PSID": 29796,
+        "REF": "OS727",
+        "STATION": "Fjærholmen",
+        "FCODE": "OVL",
+        "FUNC": "SK",
+        "YEAR": 0,
+        "Z": 0.0,
+        "LOCATION": null,
+        "DATEREG": "2008-04-29",
+        "DATECHANGE": "2023-09-15",
+        "COVER_Z": 0.0,
+        "MPNT_GUID": "AC8521C0-6D98-469D-BC8F-410231FF51ED",
+        "utm_x": 583491.18,
+        "utm_y": 6565903.12
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.462810244331402, 59.223931368819045]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 61,
+        "PSID": 29797,
+        "REF": "OS704",
+        "STATION": "Knarberg",
+        "FCODE": "OVL",
+        "FUNC": "SK",
+        "YEAR": 0,
+        "Z": 0.0,
+        "LOCATION": null,
+        "DATEREG": "2008-04-29",
+        "DATECHANGE": "2023-09-15",
+        "COVER_Z": 0.0,
+        "MPNT_GUID": "0665A8B5-9214-446E-807E-E12E9D1FCAEB",
+        "utm_x": 583042.44,
+        "utm_y": 6564167.97
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.454288212538295, 59.208442297472807]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 62,
+        "PSID": 29798,
+        "REF": "OS736",
+        "STATION": "Aarsland",
+        "FCODE": "OVL",
+        "FUNC": "SK",
+        "YEAR": 0,
+        "Z": 0.0,
+        "LOCATION": null,
+        "DATEREG": "2008-04-29",
+        "DATECHANGE": "2023-09-15",
+        "COVER_Z": 0.0,
+        "MPNT_GUID": "0DAADA62-6A71-4C57-8733-02068E279139",
+        "utm_x": 582148.61,
+        "utm_y": 6566266.71
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.439433854602736, 59.227457812947357]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 63,
+        "PSID": 29799,
+        "REF": "OS726",
+        "STATION": "Hjemseng",
+        "FCODE": "OVL",
+        "FUNC": "SK",
+        "YEAR": 0,
+        "Z": 0.0,
+        "LOCATION": null,
+        "DATEREG": "2008-04-29",
+        "DATECHANGE": "2023-09-15",
+        "COVER_Z": 0.0,
+        "MPNT_GUID": "C1B78FA4-7BC2-47D3-A5E0-31DD9C1E0C31",
+        "utm_x": 582329.78,
+        "utm_y": 6565643.93
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.442371215819831, 59.221831660397022]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 64,
+        "PSID": 29800,
+        "REF": "OS711",
+        "STATION": "Myrasundet",
+        "FCODE": "OVL",
+        "FUNC": "SK",
+        "YEAR": 0,
+        "Z": 0.0,
+        "LOCATION": null,
+        "DATEREG": "2008-04-29",
+        "DATECHANGE": "2023-09-15",
+        "COVER_Z": 0.0,
+        "MPNT_GUID": "FC16C24B-0529-4A1B-B867-05BA0BA4033B",
+        "utm_x": 583076.15,
+        "utm_y": 6567310.27
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.456079682396751, 59.236645495761422]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 65,
+        "PSID": 29801,
+        "REF": "OS699",
+        "STATION": "ARÅS",
+        "FCODE": "OVL",
+        "FUNC": "SK",
+        "YEAR": 0,
+        "Z": 1.74,
+        "LOCATION": null,
+        "DATEREG": "2008-04-29",
+        "DATECHANGE": "2020-08-06",
+        "COVER_Z": 1.74,
+        "MPNT_GUID": "FB02FA52-4323-44D1-A455-2CEEEFA3DADF",
+        "utm_x": 583038.87,
+        "utm_y": 6563008.51
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.453783227424221, 59.19803397963404]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 66,
+        "PSID": 29803,
+        "REF": "OS713",
+        "STATION": null,
+        "FCODE": "OVL",
+        "FUNC": "--",
+        "YEAR": 0,
+        "Z": 0.0,
+        "LOCATION": null,
+        "DATEREG": "2008-04-29",
+        "DATECHANGE": "2023-02-22",
+        "COVER_Z": 0.0,
+        "MPNT_GUID": "657EC38E-8DDF-4C9B-843C-9FD38B965A9C",
+        "utm_x": 579025.55,
+        "utm_y": 6568640.98
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.385593924669307, 59.249367100023086]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 67,
+        "PSID": 29804,
+        "REF": "OS717",
+        "STATION": "Nilsåsveien",
+        "FCODE": "OVL",
+        "FUNC": "SK",
+        "YEAR": 0,
+        "Z": 0.0,
+        "LOCATION": null,
+        "DATEREG": "2008-04-29",
+        "DATECHANGE": "2023-09-15",
+        "COVER_Z": 0.0,
+        "MPNT_GUID": "FA3360A3-E71B-41F6-8F21-2761E8B28926",
+        "utm_x": 583198.72,
+        "utm_y": 6566546.24
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.457934422823733, 59.229762432031798]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 69,
+        "PSID": 29806,
+        "REF": "OS724",
+        "STATION": "Breidablikk",
+        "FCODE": "OVL",
+        "FUNC": "SK",
+        "YEAR": 0,
+        "Z": 0.0,
+        "LOCATION": null,
+        "DATEREG": "2008-04-29",
+        "DATECHANGE": "2023-09-15",
+        "COVER_Z": 0.0,
+        "MPNT_GUID": "9678B313-671C-49B0-95EC-CF54BD44E4AD",
+        "utm_x": 583231.64,
+        "utm_y": 6565284.01
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.458027559409013, 59.218424394567393]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 70,
+        "PSID": 29808,
+        "REF": "OS728",
+        "STATION": "Tenvik",
+        "FCODE": "OVL",
+        "FUNC": "SK",
+        "YEAR": 0,
+        "Z": 0.0,
+        "LOCATION": null,
+        "DATEREG": "2008-04-30",
+        "DATECHANGE": "2023-09-15",
+        "COVER_Z": 0.0,
+        "MPNT_GUID": "FAAF9E51-9C82-4687-8EA5-DBA57645A792",
+        "utm_x": 578067.45,
+        "utm_y": 6560310.91
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.365810109556579, 59.174759183073249]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 71,
+        "PSID": 29821,
+        "REF": "OS721",
+        "STATION": "Nesbryggen",
+        "FCODE": "OVL",
+        "FUNC": "VS",
+        "YEAR": 0,
+        "Z": 0.0,
+        "LOCATION": null,
+        "DATEREG": "2008-05-06",
+        "DATECHANGE": "2023-09-15",
+        "COVER_Z": 0.0,
+        "MPNT_GUID": "A1FB67E2-DFC2-4318-9C29-C7274D895CB8",
+        "utm_x": 583191.96,
+        "utm_y": 6565667.85
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.457479644652674, 59.221878080006285]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 72,
+        "PSID": 29831,
+        "REF": "OS725",
+        "STATION": "Øhre",
+        "FCODE": "OVL",
+        "FUNC": "SK",
+        "YEAR": 0,
+        "Z": 0.0,
+        "LOCATION": null,
+        "DATEREG": "2008-06-12",
+        "DATECHANGE": "2023-09-15",
+        "COVER_Z": 0.0,
+        "MPNT_GUID": "7D12A896-7558-48E4-A347-D36F822A8C35",
+        "utm_x": 581524.74,
+        "utm_y": 6567072.53
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.428808663697655, 59.234812550209575]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 75,
+        "PSID": 31098,
+        "REF": "OS742",
+        "STATION": "Herstad",
+        "FCODE": "OVL",
+        "FUNC": "VS",
+        "YEAR": 2010,
+        "Z": 0.0,
+        "LOCATION": null,
+        "DATEREG": "2010-08-11",
+        "DATECHANGE": "2023-09-15",
+        "COVER_Z": 0.0,
+        "MPNT_GUID": "42E8D19B-FE2B-42D4-848F-CF95730E9765",
+        "utm_x": 580230.63,
+        "utm_y": 6567285.78
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.406214785554335, 59.236974050990547]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 76,
+        "PSID": 31132,
+        "REF": "OS605",
+        "STATION": "OS605 Bekkeveien",
+        "FCODE": "OVL",
+        "FUNC": "SA",
+        "YEAR": 2009,
+        "Z": 6.26,
+        "LOCATION": "G",
+        "DATEREG": "2010-10-07",
+        "DATECHANGE": "2021-12-14",
+        "COVER_Z": 6.26,
+        "MPNT_GUID": "00C0608D-139C-4929-A7EE-739569F73131",
+        "utm_x": 581095.51,
+        "utm_y": 6568408.96
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.421788021943533, 59.24689278154343]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 77,
+        "PSID": 31160,
+        "REF": "OS739",
+        "STATION": "Tokenes",
+        "FCODE": "OVL",
+        "FUNC": "AK",
+        "YEAR": 2009,
+        "Z": 6.14,
+        "LOCATION": "P",
+        "DATEREG": "2010-10-19",
+        "DATECHANGE": "2023-09-15",
+        "COVER_Z": 6.14,
+        "MPNT_GUID": "032D45BE-B7FC-48FF-B8B7-5352B911780B",
+        "utm_x": 579109.65,
+        "utm_y": 6560396.81
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.384068714553278, 59.175337524443918]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 79,
+        "PSID": 31276,
+        "REF": "OS740",
+        "STATION": "Kirkeveien v Unitor",
+        "FCODE": "OVL",
+        "FUNC": "AK",
+        "YEAR": 2008,
+        "Z": 5.11,
+        "LOCATION": "P",
+        "DATEREG": "2011-04-13",
+        "DATECHANGE": "2023-09-15",
+        "COVER_Z": 5.11,
+        "MPNT_GUID": "2039A43E-7ABF-448E-993A-B7BE8F7D1528",
+        "utm_x": 579061.93,
+        "utm_y": 6559981.92
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.383083662669284, 59.171621617114866]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 80,
+        "PSID": 32442,
+        "REF": "OS750",
+        "STATION": null,
+        "FCODE": "OVL",
+        "FUNC": "SK",
+        "YEAR": 1990,
+        "Z": 1.78,
+        "LOCATION": "T",
+        "DATEREG": "2011-08-23",
+        "DATECHANGE": "2025-05-16",
+        "COVER_Z": 1.79,
+        "MPNT_GUID": "4CCFD2C0-925D-4F42-98C7-B2F5A993039F",
+        "utm_x": 589659.81,
+        "utm_y": 6563596.58
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.569891467953784, 59.201965756643645]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 82,
+        "PSID": 32879,
+        "REF": "OS743",
+        "STATION": "HJEMSENG",
+        "FCODE": "OVL",
+        "FUNC": "SK",
+        "YEAR": 2011,
+        "Z": 0.0,
+        "LOCATION": null,
+        "DATEREG": "2011-10-25",
+        "DATECHANGE": "2021-01-06",
+        "COVER_Z": 1.56,
+        "MPNT_GUID": "C77B5987-C220-4A72-ABC0-088A54C077E4",
+        "utm_x": 582328.9,
+        "utm_y": 6565637.37
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.442353319091252, 59.221772938967895]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 83,
+        "PSID": 41734,
+        "REF": "OS694",
+        "STATION": "Ekenessundet",
+        "FCODE": "OVL",
+        "FUNC": "SK",
+        "YEAR": 2014,
+        "Z": 3.44,
+        "LOCATION": "P",
+        "DATEREG": "2014-11-19",
+        "DATECHANGE": "2023-09-15",
+        "COVER_Z": 3.48,
+        "MPNT_GUID": "CB7FE8AE-DD68-4083-910E-3772A9433064",
+        "utm_x": 582160.14,
+        "utm_y": 6566973.09
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.439903042401994, 59.233797095796319]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 85,
+        "PSID": 50120,
+        "REF": "OS124",
+        "STATION": "Kilsveien",
+        "FCODE": "OVL",
+        "FUNC": "SK",
+        "YEAR": 2007,
+        "Z": 1.25,
+        "LOCATION": null,
+        "DATEREG": "2008-09-25",
+        "DATECHANGE": "2023-09-15",
+        "COVER_Z": 1.25,
+        "MPNT_GUID": "8C7F2C5B-A12E-45C3-A0DD-92FCC5064B82",
+        "utm_x": 582542.81,
+        "utm_y": 6549829.76
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.44012441509725, 59.079817168349614]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 86,
+        "PSID": 50162,
+        "REF": "OS125",
+        "STATION": "Sandøysund",
+        "FCODE": "OVL",
+        "FUNC": "SK",
+        "YEAR": 0,
+        "Z": 1.73,
+        "LOCATION": null,
+        "DATEREG": "2008-09-25",
+        "DATECHANGE": "2023-09-15",
+        "COVER_Z": 0.21,
+        "MPNT_GUID": "3F98D3D2-88C4-403D-B1F1-7B83643EB2B4",
+        "utm_x": 583172.45,
+        "utm_y": 6550090.2
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.451204399846207, 59.082032928865175]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 87,
+        "PSID": 50628,
+        "REF": "OS132",
+        "STATION": "Medø",
+        "FCODE": "OVL",
+        "FUNC": "SK",
+        "YEAR": 2017,
+        "Z": 1.61,
+        "LOCATION": null,
+        "DATEREG": "2018-03-02",
+        "DATECHANGE": "2025-02-18",
+        "COVER_Z": 1.61,
+        "MPNT_GUID": "85012B61-6F77-4293-8463-BF608937909B",
+        "utm_x": 581562.19,
+        "utm_y": 6554574.71
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.424787891977264, 59.122604793891391]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 88,
+        "PSID": 51374,
+        "REF": "OS108",
+        "STATION": "Ferjeodden",
+        "FCODE": "OVL",
+        "FUNC": "SK",
+        "YEAR": 2017,
+        "Z": 1.57,
+        "LOCATION": null,
+        "DATEREG": "2018-06-27",
+        "DATECHANGE": "2025-02-18",
+        "COVER_Z": 1.57,
+        "MPNT_GUID": "1926F66A-4BC9-4BE1-8337-DD0440AACF57",
+        "utm_x": 579561.15,
+        "utm_y": 6559580.26
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.391667349776425, 59.16792239593677]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 89,
+        "PSID": 53611,
+        "REF": "OS744",
+        "STATION": "Rosanes",
+        "FCODE": "OVL",
+        "FUNC": "SAO",
+        "YEAR": 2018,
+        "Z": 1.22,
+        "LOCATION": null,
+        "DATEREG": "2019-02-11",
+        "DATECHANGE": "2023-09-15",
+        "COVER_Z": 1.22,
+        "MPNT_GUID": "B830AC6E-6E5F-41B9-BF60-1759B1A75C75",
+        "utm_x": 581338.62,
+        "utm_y": 6569106.02
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.426310178433017, 59.253104025031497]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 90,
+        "PSID": 54243,
+        "REF": "OS747",
+        "STATION": "Sevika",
+        "FCODE": "OVL",
+        "FUNC": "SK",
+        "YEAR": 2015,
+        "Z": 1.46,
+        "LOCATION": "T",
+        "DATEREG": "2019-08-16",
+        "DATECHANGE": "2023-09-15",
+        "COVER_Z": 1.44,
+        "MPNT_GUID": "D7917BEF-C271-428B-92A3-93646E43E949",
+        "utm_x": 579522.26,
+        "utm_y": 6560781.0
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.391425261588614, 59.178709627779313]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 91,
+        "PSID": 54311,
+        "REF": "OS103",
+        "STATION": "Budal",
+        "FCODE": "OVL",
+        "FUNC": "SK",
+        "YEAR": 2019,
+        "Z": 1.61,
+        "LOCATION": null,
+        "DATEREG": "2019-08-28",
+        "DATECHANGE": "2025-08-14",
+        "COVER_Z": 1.62,
+        "MPNT_GUID": "18AD80E2-5C38-4F5B-9085-1759DDF681C0",
+        "utm_x": 579186.77,
+        "utm_y": 6555181.55
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.383526209903946, 59.128501533627215]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 92,
+        "PSID": 57258,
+        "REF": "OS134",
+        "STATION": "Dalsveien Syd",
+        "FCODE": "OVL",
+        "FUNC": "SK",
+        "YEAR": 2020,
+        "Z": 3.55,
+        "LOCATION": "G",
+        "DATEREG": "2020-11-05",
+        "DATECHANGE": "2023-09-15",
+        "COVER_Z": 3.55,
+        "MPNT_GUID": "DB1097FE-876F-42A2-ABCC-81DEBB6721A9",
+        "utm_x": 581185.73,
+        "utm_y": 6553689.95
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.417885746583377, 59.114733640381495]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 94,
+        "PSID": 60717,
+        "REF": "OS131",
+        "STATION": "Gon",
+        "FCODE": "OVL",
+        "FUNC": "SK",
+        "YEAR": 2015,
+        "Z": 0.0,
+        "LOCATION": null,
+        "DATEREG": "2022-02-08",
+        "DATECHANGE": "2023-09-15",
+        "COVER_Z": 12.48,
+        "MPNT_GUID": "9F1BA889-FBFD-4BB6-8680-AE43B7DC6EC7",
+        "utm_x": 579985.4,
+        "utm_y": 6552193.53
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.396383088081091, 59.101526260293689]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 97,
+        "PSID": 62806,
+        "REF": "OS114",
+        "STATION": "Flekken",
+        "FCODE": "OVL",
+        "FUNC": "SK",
+        "YEAR": 2013,
+        "Z": 0.0,
+        "LOCATION": "A",
+        "DATEREG": "2022-11-23",
+        "DATECHANGE": "2022-11-23",
+        "COVER_Z": 0.0,
+        "MPNT_GUID": "C724C685-DB79-426C-B489-A01858073C10",
+        "utm_x": 581010.64,
+        "utm_y": 6557055.54
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.416075674617099, 59.144982329488869]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 98,
+        "PSID": 62872,
+        "REF": "OS713",
+        "STATION": "Munkerekka syd",
+        "FCODE": "OVL",
+        "FUNC": "SK",
+        "YEAR": 2022,
+        "Z": 0.0,
+        "LOCATION": null,
+        "DATEREG": "2022-12-07",
+        "DATECHANGE": "2023-09-15",
+        "COVER_Z": 3.18,
+        "MPNT_GUID": "620D85E3-3BC5-4203-B420-257CB981E48A",
+        "utm_x": 579025.35,
+        "utm_y": 6568638.08
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.385589362557093, 59.249341102100466]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 99,
+        "PSID": 62988,
+        "REF": "OS107",
+        "STATION": "Mølledammen",
+        "FCODE": "OVL",
+        "FUNC": "SK",
+        "YEAR": 0,
+        "Z": 0.0,
+        "LOCATION": null,
+        "DATEREG": "2023-01-06",
+        "DATECHANGE": "2023-09-15",
+        "COVER_Z": 0.0,
+        "MPNT_GUID": "BFD20ECA-6B04-4F5F-B0E8-F6F29C5039D4",
+        "utm_x": 579274.16,
+        "utm_y": 6558627.83
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.386303026848671, 59.159425333270732]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 100,
+        "PSID": 62989,
+        "REF": "OS109",
+        "STATION": "Sundene",
+        "FCODE": "OVL",
+        "FUNC": "SK",
+        "YEAR": 0,
+        "Z": 0.0,
+        "LOCATION": null,
+        "DATEREG": "2023-01-06",
+        "DATECHANGE": "2023-09-15",
+        "COVER_Z": 0.0,
+        "MPNT_GUID": "9B901EA4-73E1-45F4-89CE-179B844969E4",
+        "utm_x": 579922.68,
+        "utm_y": 6559357.75
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.397907456334867, 59.165856897752725]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 101,
+        "PSID": 62990,
+        "REF": "OS122",
+        "STATION": "Risbrua",
+        "FCODE": "OVL",
+        "FUNC": "SK",
+        "YEAR": 2000,
+        "Z": 0.0,
+        "LOCATION": null,
+        "DATEREG": "2023-01-06",
+        "DATECHANGE": "2023-09-15",
+        "COVER_Z": 0.0,
+        "MPNT_GUID": "AE3E0871-A81A-459C-A5B5-61FF0EDE53BE",
+        "utm_x": 581915.77,
+        "utm_y": 6549866.21
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.429202009627277, 59.080265357017538]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 102,
+        "PSID": 63005,
+        "REF": "OS129",
+        "STATION": "Havna",
+        "FCODE": "OVL",
+        "FUNC": "SK",
+        "YEAR": 2008,
+        "Z": 0.0,
+        "LOCATION": null,
+        "DATEREG": "2023-01-06",
+        "DATECHANGE": "2023-09-15",
+        "COVER_Z": 0.0,
+        "MPNT_GUID": "C848DDBF-4970-48AE-9462-A2D32B17C3DE",
+        "utm_x": 581108.77,
+        "utm_y": 6550415.37
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.415330123576654, 59.085349908087984]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 103,
+        "PSID": 64321,
+        "REF": "OS710",
+        "STATION": null,
+        "FCODE": "OVL",
+        "FUNC": "SK",
+        "YEAR": 2022,
+        "Z": 0.0,
+        "LOCATION": "P",
+        "DATEREG": "2023-08-23",
+        "DATECHANGE": "2023-09-22",
+        "COVER_Z": 4.82,
+        "MPNT_GUID": "5404548E-CC14-4F49-88B2-90CEE543434E",
+        "utm_x": 580705.61,
+        "utm_y": 6566376.79
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.414199060040094, 59.228723302732405]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 104,
+        "PSID": 64398,
+        "REF": "OS111",
+        "STATION": "Mågerøodden",
+        "FCODE": "OVL",
+        "FUNC": "SK",
+        "YEAR": 0,
+        "Z": 0.0,
+        "LOCATION": null,
+        "DATEREG": "2023-09-15",
+        "DATECHANGE": "2025-02-18",
+        "COVER_Z": 0.0,
+        "MPNT_GUID": "EB04872B-D153-46B9-AEFD-0CD337C2F660",
+        "utm_x": 582131.35,
+        "utm_y": 6558350.95
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.436145945847475, 59.15639702692539]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 105,
+        "PSID": 64399,
+        "REF": "OS112",
+        "STATION": "Mågerø Marina",
+        "FCODE": "OVL",
+        "FUNC": "--",
+        "YEAR": 0,
+        "Z": 0.0,
+        "LOCATION": null,
+        "DATEREG": "2023-09-15",
+        "DATECHANGE": "2025-02-18",
+        "COVER_Z": 0.0,
+        "MPNT_GUID": "6314C9D9-6989-4121-905F-455F74B84D89",
+        "utm_x": 581935.93,
+        "utm_y": 6557935.15
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.432574025330599, 59.152701850491823]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 106,
+        "PSID": 64400,
+        "REF": "OS113",
+        "STATION": "Vallekjær",
+        "FCODE": "OVL",
+        "FUNC": "--",
+        "YEAR": 0,
+        "Z": 0.0,
+        "LOCATION": null,
+        "DATEREG": "2023-09-15",
+        "DATECHANGE": "2025-02-18",
+        "COVER_Z": 0.0,
+        "MPNT_GUID": "4B0D9AAF-2682-4E6A-A853-4C0BF887A136",
+        "utm_x": 581373.9,
+        "utm_y": 6557546.71
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.422606222366662, 59.149322528915697]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 107,
+        "PSID": 65537,
+        "REF": null,
+        "STATION": null,
+        "FCODE": "OVL",
+        "FUNC": "SK",
+        "YEAR": 0,
+        "Z": 0.0,
+        "LOCATION": null,
+        "DATEREG": "2024-03-18",
+        "DATECHANGE": "2024-03-18",
+        "COVER_Z": 0.92,
+        "MPNT_GUID": "3C42944F-25F3-4C92-9CAC-4DA02B2DC10F",
+        "utm_x": 576543.73,
+        "utm_y": 6557890.06
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.338311422663599, 59.153302229327359]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 108,
+        "PSID": 67462,
+        "REF": "OS735",
+        "STATION": "OS735 Hjertnes",
+        "FCODE": "OVL",
+        "FUNC": "SK",
+        "YEAR": 2024,
+        "Z": 0.0,
+        "LOCATION": null,
+        "DATEREG": "2024-12-19",
+        "DATECHANGE": "2025-02-21",
+        "COVER_Z": 2.01,
+        "MPNT_GUID": "221FEF05-5DAF-4713-B067-CDD97ED0BD28",
+        "utm_x": 581325.85,
+        "utm_y": 6568510.91
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.425863177326681, 59.247763869518145]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 109,
+        "PSID": 68249,
+        "REF": "OS 120",
+        "STATION": "Inne i pumpestasjon.",
+        "FCODE": "OVL",
+        "FUNC": "SK",
+        "YEAR": 1982,
+        "Z": 0.0,
+        "LOCATION": "A",
+        "DATEREG": "2025-05-27",
+        "DATECHANGE": "2025-05-28",
+        "COVER_Z": 0.0,
+        "MPNT_GUID": "F205EB29-0273-4F69-A757-BDE51824C348",
+        "utm_x": 581180.05,
+        "utm_y": 6553895.88
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.417862951448649, 59.116583508218035]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 110,
+        "PSID": 68813,
+        "REF": null,
+        "STATION": null,
+        "FCODE": "OVL",
+        "FUNC": "SK",
+        "YEAR": 2025,
+        "Z": 0.0,
+        "LOCATION": null,
+        "DATEREG": "2025-07-31",
+        "DATECHANGE": "2025-11-17",
+        "COVER_Z": 2.07,
+        "MPNT_GUID": "BD792A74-634D-47C7-BCB7-A387F94B1E69",
+        "utm_x": 582208.75,
+        "utm_y": 6565945.72
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.440365794447342, 59.224564466938375]
+      }
+    }
+  ]
+}
