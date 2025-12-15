@@ -233,7 +233,10 @@ export default function SidePanel({
               </div>
 
               {/* Owner filters */}
-              <div className="mt-3 pt-3 border-t" style={{ borderColor: '#e5e7eb' }}>
+              <div
+                className="mt-3 pt-3 border-t"
+                style={{ borderColor: '#e5e7eb' }}
+              >
                 <div className="flex items-center justify-between mb-2">
                   <span
                     className="text-xs font-semibold"

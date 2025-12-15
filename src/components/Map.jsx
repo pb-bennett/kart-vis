@@ -874,24 +874,40 @@ export default function Map({
         </div>
         <div className="space-y-1.5 text-xs">
           {/* Prøvetakingspunkt heading */}
-          <div className="font-semibold mt-1" style={{ color: '#656263' }}>
+          <div
+            className="font-semibold mt-1"
+            style={{ color: '#656263' }}
+          >
             Prøvetakingspunkt
           </div>
           <div className="ml-2 space-y-1">
             <div className="flex items-center gap-2">
-              <div className="w-3 h-3 rounded-full bg-fuchsia-400 border-2" style={{ borderColor: '#c026d3' }}></div>
+              <div
+                className="w-3 h-3 rounded-full bg-fuchsia-400 border-2"
+                style={{ borderColor: '#c026d3' }}
+              ></div>
               <span style={{ color: '#656263' }}>Færder kommune</span>
             </div>
             <div className="flex items-center gap-2">
-              <div className="w-3 h-3 rounded-full bg-fuchsia-400 border-2" style={{ borderColor: '#22c55e' }}></div>
-              <span style={{ color: '#656263' }}>Tønsberg kommune</span>
+              <div
+                className="w-3 h-3 rounded-full bg-fuchsia-400 border-2"
+                style={{ borderColor: '#22c55e' }}
+              ></div>
+              <span style={{ color: '#656263' }}>
+                Tønsberg kommune
+              </span>
             </div>
             <div className="flex items-center gap-2">
-              <div className="w-3 h-3 rounded-full bg-fuchsia-400 border-2" style={{ borderColor: '#ff4500' }}></div>
-              <span style={{ color: '#656263' }}>Tønsberg renseanlegg</span>
+              <div
+                className="w-3 h-3 rounded-full bg-fuchsia-400 border-2"
+                style={{ borderColor: '#ff4500' }}
+              ></div>
+              <span style={{ color: '#656263' }}>
+                Tønsberg renseanlegg
+              </span>
             </div>
           </div>
-          
+
           <div className="flex items-center gap-2 pt-1">
             <div className="w-3 h-3 bg-orange-400 border-2 border-orange-600"></div>
             <span style={{ color: '#656263' }}>Overløpspunkt</span>

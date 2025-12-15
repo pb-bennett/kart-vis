@@ -38,8 +38,12 @@ export default function Home() {
 
   // Check if any filter is active
   const hasActiveFilters = Object.values(filters).some((v) => v);
-  const hasTestTypeFilters = filters.vannprøve || filters.sedimentprøve || filters.bløtbunnsfauna;
-  const hasOwnerFilters = filters.ownerFK || filters.ownerTK || filters.ownerTR;
+  const hasTestTypeFilters =
+    filters.vannprøve ||
+    filters.sedimentprøve ||
+    filters.bløtbunnsfauna;
+  const hasOwnerFilters =
+    filters.ownerFK || filters.ownerTK || filters.ownerTR;
 
   // Filter prv_punkt features based on search query and test type filters
   const filteredPrvPunkt = useMemo(() => {
@@ -81,7 +85,14 @@ export default function Home() {
     }
 
     return result;
-  }, [allLayers.prv_punkt, searchQuery, filters, hasActiveFilters, hasTestTypeFilters, hasOwnerFilters]);
+  }, [
+    allLayers.prv_punkt,
+    searchQuery,
+    filters,
+    hasActiveFilters,
+    hasTestTypeFilters,
+    hasOwnerFilters,
+  ]);
 
   // Filtered layers for the map - only prv_punkt is filtered
   const filteredLayers = {
