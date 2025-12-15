@@ -21,6 +21,9 @@ export default function Home() {
     vannprøve: false,
     sedimentprøve: false,
     bløtbunnsfauna: false,
+    ownerFK: false,
+    ownerTK: false,
+    ownerTR: false,
   });
 
   // Load layers directly from imports
@@ -35,6 +38,8 @@ export default function Home() {
 
   // Check if any filter is active
   const hasActiveFilters = Object.values(filters).some((v) => v);
+  const hasTestTypeFilters = filters.vannprøve || filters.sedimentprøve || filters.bløtbunnsfauna;
+  const hasOwnerFilters = filters.ownerFK || filters.ownerTK || filters.ownerTR;
 
   // Filter prv_punkt features based on search query and test type filters
   const filteredPrvPunkt = useMemo(() => {
@@ -53,7 +58,7 @@ export default function Home() {
     }
 
     // Apply test type filters
-    if (hasActiveFilters) {
+    if (hasTestTypeFilters) {
       result = result.filter((f) => {
         if (filters.vannprøve && f.properties.vannprøve) return true;
         if (filters.sedimentprøve && f.properties.sedimentprøve)
@@ -64,8 +69,19 @@ export default function Home() {
       });
     }
 
+    // Apply owner filters
+    if (hasOwnerFilters) {
+      result = result.filter((f) => {
+        const owner = (f.properties.Eier || '').trim();
+        if (filters.ownerFK && owner === 'FK') return true;
+        if (filters.ownerTK && owner === 'TK') return true;
+        if (filters.ownerTR && owner === 'TR') return true;
+        return false;
+      });
+    }
+
     return result;
-  }, [allLayers.prv_punkt, searchQuery, filters, hasActiveFilters]);
+  }, [allLayers.prv_punkt, searchQuery, filters, hasActiveFilters, hasTestTypeFilters, hasOwnerFilters]);
 
   // Filtered layers for the map - only prv_punkt is filtered
   const filteredLayers = {
@@ -81,6 +97,9 @@ export default function Home() {
       vannprøve: false,
       sedimentprøve: false,
       bløtbunnsfauna: false,
+      ownerFK: false,
+      ownerTK: false,
+      ownerTR: false,
     });
     setActiveLayer(layerId);
   };

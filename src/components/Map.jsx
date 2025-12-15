@@ -873,13 +873,26 @@ export default function Map({
           Tegnforklaring
         </div>
         <div className="space-y-1.5 text-xs">
-          <div className="flex items-center gap-2">
-            <div className="w-3 h-3 rounded-full bg-fuchsia-400 border-2 border-fuchsia-600"></div>
-            <span style={{ color: '#656263' }}>
-              Prøvetakingspunkt
-            </span>
+          {/* Prøvetakingspunkt heading */}
+          <div className="font-semibold mt-1" style={{ color: '#656263' }}>
+            Prøvetakingspunkt
           </div>
-          <div className="flex items-center gap-2">
+          <div className="ml-2 space-y-1">
+            <div className="flex items-center gap-2">
+              <div className="w-3 h-3 rounded-full bg-fuchsia-400 border-2" style={{ borderColor: '#c026d3' }}></div>
+              <span style={{ color: '#656263' }}>Færder kommune</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-3 h-3 rounded-full bg-fuchsia-400 border-2" style={{ borderColor: '#22c55e' }}></div>
+              <span style={{ color: '#656263' }}>Tønsberg kommune</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-3 h-3 rounded-full bg-fuchsia-400 border-2" style={{ borderColor: '#ff4500' }}></div>
+              <span style={{ color: '#656263' }}>Tønsberg renseanlegg</span>
+            </div>
+          </div>
+          
+          <div className="flex items-center gap-2 pt-1">
             <div className="w-3 h-3 bg-orange-400 border-2 border-orange-600"></div>
             <span style={{ color: '#656263' }}>Overløpspunkt</span>
           </div>
@@ -1130,12 +1143,24 @@ export default function Map({
                 pointLabel = '●'; // Filled circle for sampling
               }
 
+              // Owner-based stroke color (keep same thickness/style, only vary color)
+              const owner = (f.properties.Eier || '').trim();
+              let strokeColor;
+              if (owner === 'TK') {
+                strokeColor = '#22c55e'; // Tønsberg Kommune - green
+              } else if (owner === 'TR') {
+                strokeColor = '#ff4500'; // Tønsberg Renseanlegg - orangered
+              } else {
+                // FK (Færder Kommune) and others - keep default
+                strokeColor = pointColor;
+              }
+
               // For overflow points, use a square marker (DivIcon)
               if (isOverflow) {
                 const size = pointRadius * 2.1; // Convert radius to pixel size
                 const glowSize = size + 14;
                 const icon = L.divIcon({
-                  html: `<div style="background-color: ${pointFillColor}; border: 2px solid ${pointColor}; width: ${size}px; height: ${size}px;"></div>`,
+                  html: `<div style="background-color: ${pointFillColor}; border: 2px solid ${strokeColor}; width: ${size}px; height: ${size}px;"></div>`,
                   className: 'square-marker',
                   iconSize: [size, size],
                   iconAnchor: [size / 2, size / 2],
@@ -1409,7 +1434,7 @@ export default function Map({
                     center={latlng}
                     radius={pointRadius}
                     pathOptions={{
-                      color: pointColor,
+                      color: strokeColor,
                       fillColor: pointFillColor,
                       weight: 2,
                       opacity: 1,

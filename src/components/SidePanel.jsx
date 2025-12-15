@@ -57,6 +57,9 @@ export default function SidePanel({
       vannprøve: false,
       sedimentprøve: false,
       bløtbunnsfauna: false,
+      ownerFK: false,
+      ownerTK: false,
+      ownerTR: false,
     });
   };
 
@@ -227,6 +230,65 @@ export default function SidePanel({
                     Bløtbunnsfauna
                   </span>
                 </label>
+              </div>
+
+              {/* Owner filters */}
+              <div className="mt-3 pt-3 border-t" style={{ borderColor: '#e5e7eb' }}>
+                <div className="flex items-center justify-between mb-2">
+                  <span
+                    className="text-xs font-semibold"
+                    style={{ color: '#656263' }}
+                  >
+                    Filtrer på eier
+                  </span>
+                </div>
+                <div className="flex flex-col gap-1.5">
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={filters.ownerFK}
+                      onChange={() => toggleFilter('ownerFK')}
+                      className="w-3.5 h-3.5 rounded"
+                      style={{ accentColor: '#c026d3' }}
+                    />
+                    <span
+                      className="text-xs"
+                      style={{ color: '#656263' }}
+                    >
+                      Færder kommune
+                    </span>
+                  </label>
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={filters.ownerTK}
+                      onChange={() => toggleFilter('ownerTK')}
+                      className="w-3.5 h-3.5 rounded"
+                      style={{ accentColor: '#22c55e' }}
+                    />
+                    <span
+                      className="text-xs"
+                      style={{ color: '#656263' }}
+                    >
+                      Tønsberg kommune
+                    </span>
+                  </label>
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={filters.ownerTR}
+                      onChange={() => toggleFilter('ownerTR')}
+                      className="w-3.5 h-3.5 rounded"
+                      style={{ accentColor: '#ff4500' }}
+                    />
+                    <span
+                      className="text-xs"
+                      style={{ color: '#656263' }}
+                    >
+                      Tønsberg renseanlegg
+                    </span>
+                  </label>
+                </div>
               </div>
             </div>
           )}
